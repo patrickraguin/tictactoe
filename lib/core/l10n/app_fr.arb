@@ -1,0 +1,55 @@
+{
+  "@@locale": "fr",
+
+  "appTitle": "Tic-Tac-Toe",
+
+  "homeTitle": "Humain vs CPU",
+  "homeSubtitle": "Choisissez votre configuration et défiez l'IA.",
+  "homePlayButton": "Jouer",
+  "homeResetScoreButton": "Réinitialiser le score",
+
+  "resetScoreDialogTitle": "Réinitialiser le score ?",
+  "resetScoreDialogContent": "Cette action est irréversible.",
+  "dialogCancel": "Annuler",
+  "dialogConfirmReset": "Réinitialiser",
+
+  "configPageTitle": "Nouvelle partie",
+  "configYourSymbol": "Votre symbole",
+  "configWhoStarts": "Qui commence ?",
+  "configFirstPlayerHuman": "Moi",
+  "configFirstPlayerCpu": "CPU",
+  "configFirstPlayerRandom": "Aléatoire",
+  "configDifficulty": "Difficulté",
+  "configDifficultyEasy": "Facile",
+  "configDifficultyMedium": "Moyen",
+  "configDifficultyHard": "Difficile",
+  "configStartButton": "Commencer",
+
+  "gamePageTitle": "Partie",
+  "gameRestartTooltip": "Rejouer",
+  "gameChangeConfig": "Changer la config",
+  "gameReplay": "Rejouer",
+  "gameCpuThinking": "Le CPU réfléchit…",
+  "gameYourTurn": "À vous de jouer",
+  "gameCpuTurn": "Tour du CPU",
+  "gameYouWin": "Vous gagnez !",
+  "gameCpuWins": "Le CPU gagne.",
+  "gameDraw": "Match nul.",
+
+  "scoreError": "Erreur score : {error}",
+  "@scoreError": {
+    "placeholders": {
+      "error": { "type": "Object" }
+    }
+  },
+  "scoreWins": "Victoires",
+  "scoreDraws": "Nulles",
+  "scoreLosses": "Défaites",
+  "scoreLoadError": "Impossible de charger le score",
+
+  "settingsPageTitle": "Paramètres",
+  "settingsLanguage": "Langue",
+  "settingsLanguageSystem": "Système",
+  "settingsLanguageFr": "Français",
+  "settingsLanguageEn": "English"
+}

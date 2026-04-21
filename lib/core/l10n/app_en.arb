@@ -1,0 +1,55 @@
+{
+  "@@locale": "en",
+
+  "appTitle": "Tic-Tac-Toe",
+
+  "homeTitle": "Human vs CPU",
+  "homeSubtitle": "Choose your settings and challenge the AI.",
+  "homePlayButton": "Play",
+  "homeResetScoreButton": "Reset score",
+
+  "resetScoreDialogTitle": "Reset score?",
+  "resetScoreDialogContent": "This action cannot be undone.",
+  "dialogCancel": "Cancel",
+  "dialogConfirmReset": "Reset",
+
+  "configPageTitle": "New game",
+  "configYourSymbol": "Your symbol",
+  "configWhoStarts": "Who goes first?",
+  "configFirstPlayerHuman": "Me",
+  "configFirstPlayerCpu": "CPU",
+  "configFirstPlayerRandom": "Random",
+  "configDifficulty": "Difficulty",
+  "configDifficultyEasy": "Easy",
+  "configDifficultyMedium": "Medium",
+  "configDifficultyHard": "Hard",
+  "configStartButton": "Start",
+
+  "gamePageTitle": "Game",
+  "gameRestartTooltip": "Replay",
+  "gameChangeConfig": "Change settings",
+  "gameReplay": "Replay",
+  "gameCpuThinking": "CPU is thinking…",
+  "gameYourTurn": "Your turn",
+  "gameCpuTurn": "CPU's turn",
+  "gameYouWin": "You win!",
+  "gameCpuWins": "CPU wins.",
+  "gameDraw": "Draw.",
+
+  "scoreError": "Score error: {error}",
+  "@scoreError": {
+    "placeholders": {
+      "error": { "type": "Object" }
+    }
+  },
+  "scoreWins": "Wins",
+  "scoreDraws": "Draws",
+  "scoreLosses": "Losses",
+  "scoreLoadError": "Could not load score",
+
+  "settingsPageTitle": "Settings",
+  "settingsLanguage": "Language",
+  "settingsLanguageSystem": "System",
+  "settingsLanguageFr": "French",
+  "settingsLanguageEn": "English"
+}
