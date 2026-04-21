@@ -1,14 +1,14 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../core/logging/app_logger.dart';
-import '../../../core/logging/logger_provider.dart';
-import '../domain/ai/ai_strategy.dart';
-import '../domain/ai/ai_strategy_factory.dart';
-import '../domain/entities/board_entity.dart';
-import '../domain/entities/game_config_entity.dart';
-import '../domain/entities/game_state_entity.dart';
-import '../domain/usecases/play_move.dart';
-import '../domain/usecases/resolve_first_player.dart';
+import '../../../../../core/logging/app_logger.dart';
+import '../../../../../core/logging/logger_provider.dart';
+import '../../../domain/ai/ai_strategy.dart';
+import '../../../domain/ai/ai_strategy_factory.dart';
+import '../../../domain/entities/board_entity.dart';
+import '../../../domain/entities/game_config_entity.dart';
+import '../../../domain/entities/game_state_entity.dart';
+import '../../../domain/usecases/play_move.dart';
+import '../../../domain/usecases/resolve_first_player.dart';
 
 part 'game_controller.g.dart';
 

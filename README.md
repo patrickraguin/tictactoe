@@ -13,7 +13,9 @@ L'objectif n'est pas le jeu en lui-même, mais ce qu'il y a autour : architectur
 | Modèles         | Freezed 3 (sealed unions pour `GameState`)                |
 | Navigation      | AutoRoute 10                                              |
 | Persistance     | `shared_preferences`                                      |
-| Tests           | `flutter_test`, golden tests                              |
+| Internationalisation | `flutter_localizations` · Français + Anglais        |
+| Infos app       | `package_info_plus` (version affichée dans Paramètres)    |
+| Tests           | `flutter_test`, golden tests, `fake_async`, `mocktail`    |
 | Plateformes     | Android, iOS, macOS (Linux/Windows/Web conservés par défaut) |
 
 ## Lancer le projet
@@ -91,10 +93,11 @@ Ce qui est couvert :
 - **Fuzz test** : minimax joue 50 parties contre random → 0 défaite.
 - **Tests d'auto-jeu** : minimax vs minimax → match nul systématique.
 - **Data** : `ScoreRepositoryImpl` via `SharedPreferences.setMockInitialValues`.
-- **Widgets** : `BoardWidget` (taps, cellules désactivées, état fin de partie).
-- **Golden** : rendu du plateau en état de victoire (`goldens/board_win.png`).
+- **Application** : `GameController` (fakeAsync, délai CPU), `ScoreController`, `GameOutcomeRecorder`.
+- **Widgets** : `BoardWidget` (taps, cellules désactivées, état fin de partie), `ConfigPage` (sélections, navigation), `SettingsPage` (langue, version).
+- **Golden** : plateau en état de victoire, `GamePage` en cours et en état gagné.
 
-Régénérer le golden si le thème change : `flutter test --update-goldens`.
+Régénérer les goldens si le thème change : `flutter test --update-goldens`.
 
 ## Choix techniques assumés
 

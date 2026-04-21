@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n_ext.dart';
 import '../../../../core/router/app_router.dart';
-import '../../application/score_controller.dart';
+import '../logic/controllers/score_controller.dart';
 import '../widgets/score_panel.dart';
 
 /// Page d'accueil : affiche le titre, le score cumulé et les actions principales.
@@ -74,7 +74,7 @@ class HomePage extends ConsumerWidget {
 
   Future<void> _confirmReset(BuildContext context, WidgetRef ref) async {
     final l10n = context.l10n;
-    final ok = await showDialog<bool>(
+    final confirmReset = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text(l10n.resetScoreDialogTitle),
@@ -91,7 +91,7 @@ class HomePage extends ConsumerWidget {
         ],
       ),
     );
-    if (ok ?? false) {
+    if (confirmReset ?? false) {
       await ref.read(scoreControllerProvider.notifier).reset();
     }
   }

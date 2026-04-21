@@ -25,6 +25,7 @@ dependencies:
 
   # Local persistence
   shared_preferences: ^2.3.2
+  package_info_plus: ^9.0.0
 
   # Pure Dart utilities (domain layer)
   meta: ^1.16.0

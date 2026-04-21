@@ -1,10 +1,10 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../core/logging/logger_provider.dart';
-import '../domain/entities/game_config_entity.dart';
-import '../domain/entities/game_state_entity.dart';
-import 'game_controller.dart';
-import 'score_controller.dart';
+import '../../../../../core/logging/logger_provider.dart';
+import '../../../domain/entities/game_config_entity.dart';
+import '../../../domain/entities/game_state_entity.dart';
+import '../controllers/game_controller.dart';
+import '../controllers/score_controller.dart';
 
 part 'game_outcome_recorder.g.dart';
 

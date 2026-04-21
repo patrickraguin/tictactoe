@@ -51,5 +51,7 @@
   "settingsLanguage": "Langue",
   "settingsLanguageSystem": "Système",
   "settingsLanguageFr": "Français",
-  "settingsLanguageEn": "English"
+  "settingsLanguageEn": "English",
+
+  "settingsVersion": "Version"
 }

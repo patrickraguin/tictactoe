@@ -129,4 +129,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingsLanguageEn => 'English';
+
+  @override
+  String get settingsVersion => 'Version';
 }

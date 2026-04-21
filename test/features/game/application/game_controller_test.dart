@@ -5,7 +5,7 @@ import 'package:tictactoe/features/game/domain/entities/difficulty_enum.dart';
 import 'package:tictactoe/features/game/domain/entities/game_config_entity.dart';
 import 'package:tictactoe/features/game/domain/entities/game_state_entity.dart';
 import 'package:tictactoe/features/game/domain/entities/type_player_enum.dart';
-import 'package:tictactoe/features/game/application/game_controller.dart';
+import 'package:tictactoe/features/game/presentation/logic/controllers/game_controller.dart';
 
 import '../../../helpers/provider_helpers.dart';
 

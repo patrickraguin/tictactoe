@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n_ext.dart';
+import '../../../../core/persistence/package_info_provider.dart';
 import '../../application/locale_controller.dart';
 
 @RoutePage()
@@ -13,6 +14,7 @@ class SettingsPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final currentLocale = ref.watch(localeControllerProvider).asData?.value;
+    final packageInfoAsync = ref.watch(packageInfoProvider);
 
     void setLocale(Locale? locale) =>
         ref.read(localeControllerProvider.notifier).setLocale(locale);
@@ -44,6 +46,15 @@ class SettingsPage extends ConsumerWidget {
                     value: const Locale('en'),
                   ),
                 ],
+              ),
+            ),
+            const Divider(),
+            ListTile(
+              title: Text(l10n.settingsVersion),
+              subtitle: packageInfoAsync.when(
+                data: (info) => Text('${info.version}+${info.buildNumber}'),
+                loading: () => const Text('…'),
+                error: (_, __) => const Text('–'),
               ),
             ),
           ],

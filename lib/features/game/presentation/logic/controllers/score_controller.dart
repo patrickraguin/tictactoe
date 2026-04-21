@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../domain/entities/score_entity.dart';
-import '../presentation/logic/providers/score_providers.dart';
+import '../../../domain/entities/score_entity.dart';
+import '../providers/score_providers.dart';
 
 part 'score_controller.g.dart';
 

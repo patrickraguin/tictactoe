@@ -337,6 +337,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'English'**
   String get settingsLanguageEn;
+
+  /// No description provided for @settingsVersion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Version'**
+  String get settingsVersion;
 }
 
 class _AppLocalizationsDelegate

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n_ext.dart';
-import '../../application/game_controller.dart';
-import '../../application/game_outcome_recorder.dart';
+import '../logic/controllers/game_controller.dart';
+import '../logic/recorders/game_outcome_recorder.dart';
 import '../../domain/entities/game_config_entity.dart';
 import '../widgets/board_widget.dart';
 import '../widgets/game_end_actions.dart';
