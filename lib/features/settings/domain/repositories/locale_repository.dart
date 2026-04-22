@@ -6,5 +6,5 @@ import '../entities/app_locale.dart';
 /// Découple le domaine de toute technologie de stockage concrète.
 abstract class LocaleRepository {
   Future<Result<AppLocale>> load();
-  Future<Result<Unit>> save(AppLocale locale);
+  Future<Result<void>> save(AppLocale locale);
 }

@@ -48,8 +48,8 @@ ProviderContainer _makeContainer(GameStateEntity state) {
   final mockRepo = MockScoreRepository();
   when(() => mockRepo.load())
       .thenAnswer((_) async => const Success(ScoreEntity(wins: 3, draws: 1, losses: 2)));
-  when(() => mockRepo.save(any())).thenAnswer((_) async => Success(Unit.instance));
-  when(() => mockRepo.reset()).thenAnswer((_) async => Success(Unit.instance));
+  when(() => mockRepo.save(any())).thenAnswer((_) async => Success(null));
+  when(() => mockRepo.reset()).thenAnswer((_) async => Success(null));
 
   return makeContainer(overrides: [
     gameControllerProvider.overrideWith(() => _FakeGameController(state)),

@@ -31,10 +31,14 @@ class ScoreController extends _$ScoreController {
   Future<void> recordDraw() => _mutate((s) => recordOutcome(s, GameOutcome.draw));
 
   Future<void> reset() async {
-    await ref.read(scoreRepositoryProvider).reset();
+    final previous = state.value;
     state = AsyncData(ScoreEntity.zero());
+    final result = await ref.read(scoreRepositoryProvider).reset();
+    // Rollback to previous value if persistence fails.
+    if (result is! Success && previous != null) state = AsyncData(previous);
   }
 
+  // Applique une mutation locale à l'état du score, puis tente de la persister.
   Future<void> _mutate(ScoreEntity Function(ScoreEntity) update) async {
     final current = state.value;
     if (current == null) return;

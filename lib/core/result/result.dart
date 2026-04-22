@@ -36,11 +36,3 @@ final class StorageException implements Exception {
   @override
   String toString() => 'StorageException: $message';
 }
-
-// --- Unit ---
-
-/// Type sentinelle pour les [Result] d'opérations sans valeur de retour.
-final class Unit {
-  const Unit._();
-  static const instance = Unit._();
-}

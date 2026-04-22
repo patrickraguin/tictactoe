@@ -8,6 +8,6 @@ import '../entities/score_entity.dart';
 /// de persistence sans lever d'exceptions non contrôlées.
 abstract class ScoreRepository {
   Future<Result<ScoreEntity>> load();
-  Future<Result<Unit>> save(ScoreEntity score);
-  Future<Result<Unit>> reset();
+  Future<Result<void>> save(ScoreEntity score);
+  Future<Result<void>> reset();
 }

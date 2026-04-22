@@ -21,7 +21,7 @@ class LocaleRepositoryImpl implements LocaleRepository {
   }
 
   @override
-  Future<Result<Unit>> save(AppLocale locale) async {
+  Future<Result<void>> save(AppLocale locale) async {
     try {
       final code = locale.languageCode;
       if (code == null) {
@@ -29,7 +29,7 @@ class LocaleRepositoryImpl implements LocaleRepository {
       } else {
         await _prefs.setString(_localeKey, code);
       }
-      return Success(Unit.instance);
+      return Success(null);
     } catch (e) {
       return Error(StorageFailure(e.toString()));
     }

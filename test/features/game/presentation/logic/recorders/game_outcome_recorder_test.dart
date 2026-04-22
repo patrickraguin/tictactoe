@@ -72,8 +72,8 @@ void main() {
   setUp(() {
     mockRepo = MockScoreRepository();
     when(() => mockRepo.load()).thenAnswer((_) async => Success(ScoreEntity.zero()));
-    when(() => mockRepo.save(any())).thenAnswer((_) async => Success(Unit.instance));
-    when(() => mockRepo.reset()).thenAnswer((_) async => Success(Unit.instance));
+    when(() => mockRepo.save(any())).thenAnswer((_) async => Success(null));
+    when(() => mockRepo.reset()).thenAnswer((_) async => Success(null));
   });
 
   makeRecorderContainer() => makeContainer(overrides: [

@@ -29,19 +29,19 @@ class GameOutcomeRecorder extends _$GameOutcomeRecorder {
             (previous == null || !previous.game.isOver) && next.game.isOver;
         if (!justEnded) return;
 
-        final controller = ref.read(scoreControllerProvider.notifier);
+        final scoreController = ref.read(scoreControllerProvider.notifier);
         switch (next.game) {
           case WonEntity(:final winner, :final humanMark):
             if (winner == humanMark) {
               log.info('Outcome recorded: win', tag: _tag);
-              await controller.recordWin();
+              await scoreController.recordWin();
             } else {
               log.info('Outcome recorded: loss', tag: _tag);
-              await controller.recordLoss();
+              await scoreController.recordLoss();
             }
           case DrawEntity():
             log.info('Outcome recorded: draw', tag: _tag);
-            await controller.recordDraw();
+            await scoreController.recordDraw();
           case InProgressEntity():
             break; // unreachable: justEnded guard ensures next.game.isOver
         }

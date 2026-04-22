@@ -27,20 +27,20 @@ class ScoreRepositoryImpl implements ScoreRepository {
   }
 
   @override
-  Future<Result<Unit>> save(ScoreEntity score) async {
+  Future<Result<void>> save(ScoreEntity score) async {
     try {
       await _local.write(wins: score.wins, losses: score.losses, draws: score.draws);
-      return Success(Unit.instance);
+      return Success(null);
     } catch (e) {
       return Error(StorageFailure(e.toString()));
     }
   }
 
   @override
-  Future<Result<Unit>> reset() async {
+  Future<Result<void>> reset() async {
     try {
       await _local.clear();
-      return Success(Unit.instance);
+      return Success(null);
     } catch (e) {
       return Error(StorageFailure(e.toString()));
     }

@@ -16,8 +16,8 @@ void main() {
   setUp(() {
     mockRepo = MockScoreRepository();
     when(() => mockRepo.load()).thenAnswer((_) async => Success(ScoreEntity.zero()));
-    when(() => mockRepo.save(any())).thenAnswer((_) async => Success(Unit.instance));
-    when(() => mockRepo.reset()).thenAnswer((_) async => Success(Unit.instance));
+    when(() => mockRepo.save(any())).thenAnswer((_) async => Success(null));
+    when(() => mockRepo.reset()).thenAnswer((_) async => Success(null));
   });
 
   makeScoreContainer() => makeContainer(overrides: [
@@ -80,6 +80,19 @@ void main() {
 
     expect(container.read(scoreControllerProvider).value, ScoreEntity.zero());
     verify(() => mockRepo.reset()).called(1);
+  });
+
+  test('reset rolls back to previous score when repo.reset fails', () async {
+    const initial = ScoreEntity(wins: 5, losses: 3, draws: 1);
+    when(() => mockRepo.load()).thenAnswer((_) async => const Success(initial));
+    when(() => mockRepo.reset())
+        .thenAnswer((_) async => const Error(StorageFailure('disk full')));
+
+    final container = makeScoreContainer();
+    await container.read(scoreControllerProvider.future);
+    await container.read(scoreControllerProvider.notifier).reset();
+
+    expect(container.read(scoreControllerProvider).value, initial);
   });
 
   test('multiple mutations accumulate correctly', () async {

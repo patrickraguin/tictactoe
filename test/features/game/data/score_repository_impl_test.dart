@@ -15,7 +15,7 @@ void main() {
     final repo = ScoreRepositoryImpl(ScoreLocalDatasource(prefs));
 
     final saveResult = await repo.save(const ScoreEntity(wins: 3, losses: 1, draws: 2));
-    expect(saveResult, isA<Success<Unit>>());
+    expect(saveResult, isA<Success<void>>());
 
     final loadResult = await repo.load();
     expect(loadResult, isA<Success<ScoreEntity>>());
@@ -32,7 +32,7 @@ void main() {
     final repo = ScoreRepositoryImpl(ScoreLocalDatasource(prefs));
 
     final resetResult = await repo.reset();
-    expect(resetResult, isA<Success<Unit>>());
+    expect(resetResult, isA<Success<void>>());
 
     final loadResult = await repo.load();
     expect((loadResult as Success<ScoreEntity>).value, ScoreEntity.zero());
