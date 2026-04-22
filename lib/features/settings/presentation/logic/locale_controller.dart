@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../core/persistence/shared_prefs_provider.dart';
+import '../../../../core/persistence/shared_prefs_provider.dart';
 
 part 'locale_controller.g.dart';
 

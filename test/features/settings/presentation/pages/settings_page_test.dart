@@ -5,7 +5,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:tictactoe/core/l10n/app_localizations.dart';
 import 'package:tictactoe/core/persistence/package_info_provider.dart';
 import 'package:tictactoe/core/persistence/shared_prefs_provider.dart';
-import 'package:tictactoe/features/settings/application/locale_controller.dart';
+import 'package:tictactoe/features/settings/presentation/logic/locale_controller.dart';
 import 'package:tictactoe/features/settings/presentation/pages/settings_page.dart';
 
 import '../../../../helpers/provider_helpers.dart';

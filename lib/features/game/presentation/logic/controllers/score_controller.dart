@@ -1,5 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../../../core/result/result.dart';
 import '../../../domain/entities/score_entity.dart';
 import '../providers/score_providers.dart';
 
@@ -17,7 +18,11 @@ class ScoreController extends _$ScoreController {
   @override
   Future<ScoreEntity> build() async {
     final repo = ref.watch(scoreRepositoryProvider);
-    return repo.load();
+    final result = await repo.load();
+    return switch (result) {
+      Success(:final value) => value,
+      Error(:final failure) => throw StorageException(failure.message),
+    };
   }
 
   Future<void> recordWin() => _mutate((s) => s.copyWith(wins: s.wins + 1));
@@ -25,13 +30,13 @@ class ScoreController extends _$ScoreController {
   Future<void> recordDraw() => _mutate((s) => s.copyWith(draws: s.draws + 1));
 
   Future<void> reset() async {
-    final repo = ref.read(scoreRepositoryProvider);
-    await repo.reset();
+    await ref.read(scoreRepositoryProvider).reset();
     state = AsyncData(ScoreEntity.zero());
   }
 
   Future<void> _mutate(ScoreEntity Function(ScoreEntity) update) async {
-    final current = state.value ?? ScoreEntity.zero();
+    final current = state.value;
+    if (current == null) return;
     final next = update(current);
     state = AsyncData(next);
     await ref.read(scoreRepositoryProvider).save(next);

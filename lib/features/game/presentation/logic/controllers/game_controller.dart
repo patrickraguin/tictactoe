@@ -5,6 +5,7 @@ import '../../../../../core/logging/logger_provider.dart';
 import '../../../domain/ai/ai_strategy.dart';
 import '../../../domain/ai/ai_strategy_factory.dart';
 import '../../../domain/entities/board_entity.dart';
+import '../../../domain/entities/difficulty_enum.dart';
 import '../../../domain/entities/game_config_entity.dart';
 import '../../../domain/entities/game_state_entity.dart';
 import '../../../domain/usecases/play_move.dart';
@@ -22,8 +23,12 @@ part 'game_controller.g.dart';
 class GameController extends _$GameController {
   static const _tag = 'GameController';
 
-  /// Delay before the CPU plays so the move feels intentional.
-  static const _cpuThinkingDelay = Duration(milliseconds: 450);
+  /// Délai de "réflexion" du CPU adapté à la difficulté pour un ressenti cohérent.
+  static const _cpuThinkingDelay = {
+    DifficultyEnum.easy: Duration(milliseconds: 200),
+    DifficultyEnum.medium: Duration(milliseconds: 450),
+    DifficultyEnum.hard: Duration(milliseconds: 700),
+  };
 
   /// Cached strategy for the lifetime of this controller instance.
   late AiStrategy _strategy;
@@ -73,7 +78,7 @@ class GameController extends _$GameController {
     if (current.turn == current.humanMark) return;
 
     state = current.copyWith(cpuThinking: true);
-    await Future<void>.delayed(_cpuThinkingDelay);
+    await Future<void>.delayed(_cpuThinkingDelay[config.difficulty]!);
 
     // Guard against disposal during the delay (e.g. user navigates away).
     if (!ref.mounted) return;

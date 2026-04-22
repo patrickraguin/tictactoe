@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n_ext.dart';
 import '../../../../core/persistence/package_info_provider.dart';
-import '../../application/locale_controller.dart';
+import '../logic/locale_controller.dart';
 
 @RoutePage()
 class SettingsPage extends ConsumerWidget {

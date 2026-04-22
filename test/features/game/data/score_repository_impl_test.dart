@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tictactoe/core/result/result.dart';
 import 'package:tictactoe/features/game/data/datasources/score_local_datasource.dart';
 import 'package:tictactoe/features/game/data/repositories/score_repository_impl.dart';
 import 'package:tictactoe/features/game/domain/entities/score_entity.dart';
@@ -13,9 +14,12 @@ void main() {
     final prefs = await SharedPreferences.getInstance();
     final repo = ScoreRepositoryImpl(ScoreLocalDatasource(prefs));
 
-    await repo.save(const ScoreEntity(wins: 3, losses: 1, draws: 2));
-    final loaded = await repo.load();
-    expect(loaded, const ScoreEntity(wins: 3, losses: 1, draws: 2));
+    final saveResult = await repo.save(const ScoreEntity(wins: 3, losses: 1, draws: 2));
+    expect(saveResult, isA<Success<Unit>>());
+
+    final loadResult = await repo.load();
+    expect(loadResult, isA<Success<ScoreEntity>>());
+    expect((loadResult as Success<ScoreEntity>).value, const ScoreEntity(wins: 3, losses: 1, draws: 2));
   });
 
   test('reset clears persisted score', () async {
@@ -27,7 +31,10 @@ void main() {
     final prefs = await SharedPreferences.getInstance();
     final repo = ScoreRepositoryImpl(ScoreLocalDatasource(prefs));
 
-    await repo.reset();
-    expect(await repo.load(), ScoreEntity.zero());
+    final resetResult = await repo.reset();
+    expect(resetResult, isA<Success<Unit>>());
+
+    final loadResult = await repo.load();
+    expect((loadResult as Success<ScoreEntity>).value, ScoreEntity.zero());
   });
 }

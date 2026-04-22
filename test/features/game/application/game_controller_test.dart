@@ -81,7 +81,7 @@ void main() {
       });
     });
 
-    test('CPU plays exactly after 450 ms thinking delay', () {
+    test('CPU plays exactly after 200 ms thinking delay (easy)', () {
       final container = makeContainer();
       final sub = container.listen(gameControllerProvider(_humanFirstConfig), (_, __) {});
       addTearDown(sub.close);
@@ -90,7 +90,7 @@ void main() {
         container.read(gameControllerProvider(_humanFirstConfig).notifier).playHumanMove(0);
 
         // Just before delay: CPU has not played yet
-        fake.elapse(const Duration(milliseconds: 449));
+        fake.elapse(const Duration(milliseconds: 199));
         expect((sub.read() as InProgressEntity).cpuThinking, isTrue);
 
         // At/after the delay: CPU has played (board has 2 pieces)
@@ -116,7 +116,7 @@ void main() {
   });
 
   group('CPU goes first', () {
-    test('plays opening move after microtask + 450 ms delay', () {
+    test('plays opening move after microtask + 200 ms delay (easy)', () {
       final container = makeContainer();
 
       fakeAsync((fake) {
@@ -127,7 +127,7 @@ void main() {
         fake.flushMicrotasks();
         expect((sub.read() as InProgressEntity).cpuThinking, isTrue);
 
-        fake.elapse(const Duration(milliseconds: 450));
+        fake.elapse(const Duration(milliseconds: 200));
 
         final state = sub.read();
         expect(state.board.cells.where((c) => c.isPlayed).length, 1);
@@ -143,9 +143,9 @@ void main() {
       addTearDown(sub.close);
 
       fakeAsync((fake) {
-        // Play a move and wait for CPU to respond
+        // Play a move and wait for CPU to respond (easy = 200 ms)
         container.read(gameControllerProvider(_humanFirstConfig).notifier).playHumanMove(0);
-        fake.elapse(const Duration(milliseconds: 450));
+        fake.elapse(const Duration(milliseconds: 200));
         expect(sub.read().board.cells.where((c) => c.isPlayed).length, 2);
 
         // Restart

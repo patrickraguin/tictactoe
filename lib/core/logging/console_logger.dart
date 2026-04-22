@@ -7,20 +7,27 @@ import 'app_logger.dart';
 /// Implémentation console de [AppLogger] basée sur [dart:developer.log].
 ///
 /// N'émet rien en mode release ([kReleaseMode]).
+/// Filtre les messages en dessous de [minLevel] pour réduire le bruit
+/// en mode profile ou lors de sessions de debug spécifiques.
 /// Les niveaux correspondent aux valeurs standard de [dart:developer] :
 /// debug → 0, info → 800, warning → 900, error → 1000.
 class ConsoleLogger implements AppLogger {
-  const ConsoleLogger();
+  const ConsoleLogger({this.minLevel = LogLevel.debug});
+
+  @override
+  final LogLevel minLevel;
+
+  bool _shouldLog(LogLevel level) => !kReleaseMode && level.index >= minLevel.index;
 
   @override
   void debug(String message, {String? tag}) {
-    if (kReleaseMode) return;
+    if (!_shouldLog(LogLevel.debug)) return;
     dev.log(message, name: tag ?? '', level: 0);
   }
 
   @override
   void info(String message, {String? tag}) {
-    if (kReleaseMode) return;
+    if (!_shouldLog(LogLevel.info)) return;
     dev.log(message, name: tag ?? '', level: 800);
   }
 
@@ -31,7 +38,7 @@ class ConsoleLogger implements AppLogger {
     StackTrace? stackTrace,
     String? tag,
   }) {
-    if (kReleaseMode) return;
+    if (!_shouldLog(LogLevel.warning)) return;
     dev.log(
       message,
       name: tag ?? '',
@@ -48,7 +55,7 @@ class ConsoleLogger implements AppLogger {
     StackTrace? stackTrace,
     String? tag,
   }) {
-    if (kReleaseMode) return;
+    if (!_shouldLog(LogLevel.error)) return;
     dev.log(
       message,
       name: tag ?? '',

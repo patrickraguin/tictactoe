@@ -3,7 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'l10n/app_localizations.dart';
-import '../features/settings/application/locale_controller.dart';
+import '../features/settings/presentation/logic/locale_controller.dart';
 import 'router/app_router.dart';
 import 'theme/app_theme.dart';
 

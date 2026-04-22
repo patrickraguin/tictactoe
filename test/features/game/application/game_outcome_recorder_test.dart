@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:tictactoe/core/result/result.dart';
 import 'package:tictactoe/features/game/domain/entities/board_entity.dart';
 import 'package:tictactoe/features/game/domain/entities/cell_mark_enum.dart';
 import 'package:tictactoe/features/game/domain/entities/difficulty_enum.dart';
@@ -9,7 +10,7 @@ import 'package:tictactoe/features/game/domain/entities/game_state_entity.dart';
 import 'package:tictactoe/features/game/domain/entities/score_entity.dart';
 import 'package:tictactoe/features/game/domain/entities/type_player_enum.dart';
 import 'package:tictactoe/features/game/presentation/logic/controllers/game_controller.dart';
-import 'package:tictactoe/features/game/application/score_controller.dart';
+import 'package:tictactoe/features/game/presentation/logic/controllers/score_controller.dart';
 import 'package:tictactoe/features/game/presentation/logic/recorders/game_outcome_recorder.dart';
 import 'package:tictactoe/features/game/presentation/logic/providers/score_providers.dart';
 
@@ -67,9 +68,9 @@ void main() {
 
   setUp(() {
     mockRepo = MockScoreRepository();
-    when(() => mockRepo.load()).thenAnswer((_) async => ScoreEntity.zero());
-    when(() => mockRepo.save(any())).thenAnswer((_) async {});
-    when(() => mockRepo.reset()).thenAnswer((_) async {});
+    when(() => mockRepo.load()).thenAnswer((_) async => Success(ScoreEntity.zero()));
+    when(() => mockRepo.save(any())).thenAnswer((_) async => Success(Unit.instance));
+    when(() => mockRepo.reset()).thenAnswer((_) async => Success(Unit.instance));
   });
 
   makeRecorderContainer() => makeContainer(overrides: [

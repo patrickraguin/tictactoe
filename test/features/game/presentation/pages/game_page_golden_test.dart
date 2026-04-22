@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:tictactoe/core/l10n/app_localizations.dart';
+import 'package:tictactoe/core/result/result.dart';
 import 'package:tictactoe/features/game/domain/entities/board_entity.dart';
 import 'package:tictactoe/features/game/domain/entities/cell_mark_enum.dart';
 import 'package:tictactoe/features/game/domain/entities/difficulty_enum.dart';
@@ -45,9 +46,9 @@ Widget _buildApp(ProviderContainer container) => UncontrolledProviderScope(
 ProviderContainer _makeContainer(GameStateEntity state) {
   final mockRepo = MockScoreRepository();
   when(() => mockRepo.load())
-      .thenAnswer((_) async => const ScoreEntity(wins: 3, draws: 1, losses: 2));
-  when(() => mockRepo.save(any())).thenAnswer((_) async {});
-  when(() => mockRepo.reset()).thenAnswer((_) async {});
+      .thenAnswer((_) async => const Success(ScoreEntity(wins: 3, draws: 1, losses: 2)));
+  when(() => mockRepo.save(any())).thenAnswer((_) async => Success(Unit.instance));
+  when(() => mockRepo.reset()).thenAnswer((_) async => Success(Unit.instance));
 
   return makeContainer(overrides: [
     gameControllerProvider.overrideWith(() => _FakeGameController(state)),

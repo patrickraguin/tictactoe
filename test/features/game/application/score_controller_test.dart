@@ -1,7 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:tictactoe/core/result/result.dart';
 import 'package:tictactoe/features/game/domain/entities/score_entity.dart';
-import 'package:tictactoe/features/game/application/score_controller.dart';
+import 'package:tictactoe/features/game/presentation/logic/controllers/score_controller.dart';
 import 'package:tictactoe/features/game/presentation/logic/providers/score_providers.dart';
 
 import '../../../helpers/mock_score_repository.dart';
@@ -14,9 +15,9 @@ void main() {
 
   setUp(() {
     mockRepo = MockScoreRepository();
-    when(() => mockRepo.load()).thenAnswer((_) async => ScoreEntity.zero());
-    when(() => mockRepo.save(any())).thenAnswer((_) async {});
-    when(() => mockRepo.reset()).thenAnswer((_) async {});
+    when(() => mockRepo.load()).thenAnswer((_) async => Success(ScoreEntity.zero()));
+    when(() => mockRepo.save(any())).thenAnswer((_) async => Success(Unit.instance));
+    when(() => mockRepo.reset()).thenAnswer((_) async => Success(Unit.instance));
   });
 
   makeScoreContainer() => makeContainer(overrides: [
@@ -25,7 +26,7 @@ void main() {
 
   test('loads score from repository on init', () async {
     when(() => mockRepo.load())
-        .thenAnswer((_) async => const ScoreEntity(wins: 3, losses: 1, draws: 2));
+        .thenAnswer((_) async => const Success(ScoreEntity(wins: 3, losses: 1, draws: 2)));
 
     final container = makeScoreContainer();
     final score = await container.read(scoreControllerProvider.future);
@@ -71,7 +72,7 @@ void main() {
 
   test('reset sets score to zero and calls repo.reset', () async {
     when(() => mockRepo.load())
-        .thenAnswer((_) async => const ScoreEntity(wins: 5, losses: 3, draws: 1));
+        .thenAnswer((_) async => const Success(ScoreEntity(wins: 5, losses: 3, draws: 1)));
 
     final container = makeScoreContainer();
     await container.read(scoreControllerProvider.future);
@@ -95,5 +96,19 @@ void main() {
       container.read(scoreControllerProvider).value,
       const ScoreEntity(wins: 2, losses: 1, draws: 1),
     );
+  });
+
+  test('does not mutate when state is not yet loaded', () async {
+    // Simulate a slow load — mutate before build completes
+    when(() => mockRepo.load()).thenAnswer(
+      (_) => Future.delayed(const Duration(seconds: 1), () => Success(ScoreEntity.zero())),
+    );
+
+    final container = makeScoreContainer();
+    // Don't await build — state is still AsyncLoading
+    await container.read(scoreControllerProvider.notifier).recordWin();
+
+    // Save should NOT have been called since state was null
+    verifyNever(() => mockRepo.save(any()));
   });
 }

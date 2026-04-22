@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:tictactoe/features/settings/application/locale_controller.dart';
+import 'package:tictactoe/features/settings/presentation/logic/locale_controller.dart';
 import 'package:tictactoe/core/persistence/shared_prefs_provider.dart';
 
-import '../../../helpers/provider_helpers.dart';
+import '../../../../helpers/provider_helpers.dart';
 
 void main() {
   group('LocaleController', () {
