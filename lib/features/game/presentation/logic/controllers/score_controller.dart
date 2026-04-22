@@ -2,6 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../../core/result/result.dart';
 import '../../../domain/entities/score_entity.dart';
+import '../../../domain/usecases/record_outcome.dart';
 import '../providers/score_providers.dart';
 
 part 'score_controller.g.dart';
@@ -25,9 +26,9 @@ class ScoreController extends _$ScoreController {
     };
   }
 
-  Future<void> recordWin() => _mutate((s) => s.copyWith(wins: s.wins + 1));
-  Future<void> recordLoss() => _mutate((s) => s.copyWith(losses: s.losses + 1));
-  Future<void> recordDraw() => _mutate((s) => s.copyWith(draws: s.draws + 1));
+  Future<void> recordWin() => _mutate((s) => recordOutcome(s, GameOutcome.win));
+  Future<void> recordLoss() => _mutate((s) => recordOutcome(s, GameOutcome.loss));
+  Future<void> recordDraw() => _mutate((s) => recordOutcome(s, GameOutcome.draw));
 
   Future<void> reset() async {
     await ref.read(scoreRepositoryProvider).reset();

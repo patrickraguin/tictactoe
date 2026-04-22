@@ -1,33 +1,27 @@
 import 'package:flutter/widgets.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../../core/persistence/shared_prefs_provider.dart';
+import '../../domain/entities/app_locale.dart';
+import 'locale_repository_provider.dart';
 
 part 'locale_controller.g.dart';
 
-const _localeKey = 'locale';
-
 /// Contrôleur de la locale applicative (keepAlive).
 ///
-/// Charge la préférence de langue depuis [SharedPreferences] à l'initialisation.
+/// Charge la préférence de langue depuis [LocaleRepository] à l'initialisation.
 /// `null` signifie « utiliser la locale système ».
-/// Persisté sous la clé [_localeKey] ('fr', 'en', ou absent).
 @Riverpod(keepAlive: true)
 class LocaleController extends _$LocaleController {
   @override
   Future<Locale?> build() async {
-    final prefs = ref.watch(sharedPreferencesInstanceProvider);
-    final code = prefs.getString(_localeKey);
+    final appLocale = await ref.watch(localeRepositoryProvider).load();
+    final code = appLocale.languageCode;
     return code != null ? Locale(code) : null;
   }
 
   Future<void> setLocale(Locale? locale) async {
-    final prefs = ref.read(sharedPreferencesInstanceProvider);
-    if (locale == null) {
-      await prefs.remove(_localeKey);
-    } else {
-      await prefs.setString(_localeKey, locale.languageCode);
-    }
+    final appLocale = AppLocale.fromCode(locale?.languageCode);
+    await ref.read(localeRepositoryProvider).save(appLocale);
     state = AsyncData(locale);
   }
 }

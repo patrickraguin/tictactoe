@@ -7,7 +7,7 @@ import 'package:tictactoe/features/game/domain/entities/game_state_entity.dart';
 import 'package:tictactoe/features/game/domain/entities/type_player_enum.dart';
 import 'package:tictactoe/features/game/presentation/logic/controllers/game_controller.dart';
 
-import '../../../helpers/provider_helpers.dart';
+import '../../../../../helpers/provider_helpers.dart';
 
 const _humanFirstConfig = GameConfigEntity(
   humanMark: CellMarkEnum.x,

@@ -13,6 +13,8 @@ class ScoreLocalDatasource {
   static const _lossesKey = 'score.losses';
   static const _drawsKey = 'score.draws';
 
+  // SharedPreferences est synchrone après la première initialisation (await getInstance).
+  // L'asymétrie read-sync / write-async est intentionnelle et garantie par le framework.
   int readWins() => _prefs.getInt(_winsKey) ?? 0;
   int readLosses() => _prefs.getInt(_lossesKey) ?? 0;
   int readDraws() => _prefs.getInt(_drawsKey) ?? 0;

@@ -5,8 +5,8 @@ import 'package:tictactoe/features/game/domain/entities/score_entity.dart';
 import 'package:tictactoe/features/game/presentation/logic/controllers/score_controller.dart';
 import 'package:tictactoe/features/game/presentation/logic/providers/score_providers.dart';
 
-import '../../../helpers/mock_score_repository.dart';
-import '../../../helpers/provider_helpers.dart';
+import '../../../../../helpers/mock_score_repository.dart';
+import '../../../../../helpers/provider_helpers.dart';
 
 void main() {
   late MockScoreRepository mockRepo;

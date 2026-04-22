@@ -3,13 +3,13 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../../../core/logging/app_logger.dart';
 import '../../../../../core/logging/logger_provider.dart';
 import '../../../domain/ai/ai_strategy.dart';
-import '../../../domain/ai/ai_strategy_factory.dart';
 import '../../../domain/entities/board_entity.dart';
-import '../../../domain/entities/difficulty_enum.dart';
+import '../../../domain/entities/cpu_thinking_delay.dart';
 import '../../../domain/entities/game_config_entity.dart';
 import '../../../domain/entities/game_state_entity.dart';
 import '../../../domain/usecases/play_move.dart';
 import '../../../domain/usecases/resolve_first_player.dart';
+import '../providers/ai_strategy_provider.dart';
 
 part 'game_controller.g.dart';
 
@@ -17,18 +17,11 @@ part 'game_controller.g.dart';
 ///
 /// Gère la machine à états de [GameStateEntity] : validation des coups humains,
 /// déclenchement asynchrone du coup CPU (avec délai d'attente simulé)
-/// et réinitialisation via [restart]. La stratégie IA est instanciée une
-/// seule fois à la construction et réutilisée pour toute la durée de vie.
+/// et réinitialisation via [restart]. La stratégie IA est injectée via
+/// [aiStrategyProvider] pour permettre l'override en test.
 @riverpod
 class GameController extends _$GameController {
   static const _tag = 'GameController';
-
-  /// Délai de "réflexion" du CPU adapté à la difficulté pour un ressenti cohérent.
-  static const _cpuThinkingDelay = {
-    DifficultyEnum.easy: Duration(milliseconds: 200),
-    DifficultyEnum.medium: Duration(milliseconds: 450),
-    DifficultyEnum.hard: Duration(milliseconds: 700),
-  };
 
   /// Cached strategy for the lifetime of this controller instance.
   late AiStrategy _strategy;
@@ -37,7 +30,7 @@ class GameController extends _$GameController {
   @override
   GameStateEntity build(GameConfigEntity config) {
     _log = ref.read(loggerProvider);
-    _strategy = aiStrategyFor(config.difficulty);
+    _strategy = ref.watch(aiStrategyProvider(config.difficulty));
     final firstMark = resolveFirstPlayer(config);
     final initial = initialState(
       board: BoardEntity.empty(),
@@ -78,7 +71,7 @@ class GameController extends _$GameController {
     if (current.turn == current.humanMark) return;
 
     state = current.copyWith(cpuThinking: true);
-    await Future<void>.delayed(_cpuThinkingDelay[config.difficulty]!);
+    await Future<void>.delayed(config.difficulty.cpuThinkingDelay);
 
     // Guard against disposal during the delay (e.g. user navigates away).
     if (!ref.mounted) return;

@@ -14,8 +14,8 @@ import 'package:tictactoe/features/game/presentation/logic/controllers/score_con
 import 'package:tictactoe/features/game/presentation/logic/recorders/game_outcome_recorder.dart';
 import 'package:tictactoe/features/game/presentation/logic/providers/score_providers.dart';
 
-import '../../../helpers/mock_score_repository.dart';
-import '../../../helpers/provider_helpers.dart';
+import '../../../../../helpers/mock_score_repository.dart';
+import '../../../../../helpers/provider_helpers.dart';
 
 /// Fake controller whose state can be driven directly via [emit].
 /// Overrides [build] so no AI strategy or timer logic is involved.
