@@ -85,7 +85,7 @@ final class GameControllerProvider
   }
 }
 
-String _$gameControllerHash() => r'e3e63b31fa6f6799c5aa5ff84e5a5a997a40ec20';
+String _$gameControllerHash() => r'4041d4ec8f7b0d4849834356f40ef0339b6bce74';
 
 /// Contrôleur principal de la partie (Riverpod Notifier).
 ///

@@ -54,7 +54,7 @@ final class ScoreControllerProvider
   ScoreController create() => ScoreController();
 }
 
-String _$scoreControllerHash() => r'b4832cbcdf141ff87987b74d8fb1de2b60d8cd06';
+String _$scoreControllerHash() => r'2a3962b451c9e67ce4003c3635cf19175e5b60fb';
 
 /// Gestionnaire d'état du score (Riverpod AsyncNotifier, keepAlive).
 ///
