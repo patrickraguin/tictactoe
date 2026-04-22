@@ -4,7 +4,6 @@ import '../../../../../core/logging/app_logger.dart';
 import '../../../../../core/logging/logger_provider.dart';
 import '../../../domain/ai/ai_strategy.dart';
 import '../../../domain/entities/board_entity.dart';
-import '../../../domain/entities/cpu_thinking_delay.dart';
 import '../../../domain/entities/game_config_entity.dart';
 import '../../../domain/entities/game_state_entity.dart';
 import '../../../domain/usecases/play_move.dart';
@@ -75,7 +74,7 @@ class GameController extends _$GameController {
     if (current.turn == current.humanMark) return;
 
     state = state.copyWith(cpuThinking: true);
-    await Future<void>.delayed(config.difficulty.cpuThinkingDelay);
+    await Future<void>.delayed(const Duration(milliseconds: 400));
 
     // Guard against disposal during the delay (e.g. user navigates away).
     if (!ref.mounted) return;
