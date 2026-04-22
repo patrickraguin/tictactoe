@@ -12,6 +12,7 @@ import 'package:tictactoe/features/game/domain/entities/game_state_entity.dart';
 import 'package:tictactoe/features/game/domain/entities/score_entity.dart';
 import 'package:tictactoe/features/game/domain/entities/type_player_enum.dart';
 import 'package:tictactoe/features/game/presentation/logic/controllers/game_controller.dart';
+import 'package:tictactoe/features/game/presentation/logic/game_ui_state.dart';
 import 'package:tictactoe/features/game/presentation/logic/providers/score_providers.dart';
 import 'package:tictactoe/features/game/presentation/pages/game_page.dart';
 
@@ -30,7 +31,7 @@ class _FakeGameController extends GameController {
   final GameStateEntity _fixedState;
 
   @override
-  GameStateEntity build(GameConfigEntity config) => _fixedState;
+  GameUiState build(GameConfigEntity config) => GameUiState(game: _fixedState);
 }
 
 Widget _buildApp(ProviderContainer container) => UncontrolledProviderScope(

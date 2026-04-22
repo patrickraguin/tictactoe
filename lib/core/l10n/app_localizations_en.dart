@@ -116,6 +116,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get scoreLoadError => 'Could not load score';
 
   @override
+  String get scoreRetry => 'Retry';
+
+  @override
   String get settingsPageTitle => 'Settings';
 
   @override
@@ -132,4 +135,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsVersion => 'Version';
+
+  @override
+  String semanticsCellEmpty(int row, int col) {
+    return 'Row $row, column $col, empty, tap to play';
+  }
+
+  @override
+  String semanticsCellPlayed(int row, int col, String mark) {
+    return 'Row $row, column $col, $mark';
+  }
+
+  @override
+  String get semanticsGameBoard => 'Game board';
+
+  @override
+  String get semanticsWinningLine => 'Winning line';
+
+  @override
+  String semanticsScoreSummary(int wins, int draws, int losses) {
+    return '$wins wins, $draws draws, $losses losses';
+  }
 }

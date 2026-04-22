@@ -308,6 +308,12 @@ abstract class AppLocalizations {
   /// **'Impossible de charger le score'**
   String get scoreLoadError;
 
+  /// No description provided for @scoreRetry.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réessayer'**
+  String get scoreRetry;
+
   /// No description provided for @settingsPageTitle.
   ///
   /// In fr, this message translates to:
@@ -343,6 +349,36 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Version'**
   String get settingsVersion;
+
+  /// No description provided for @semanticsCellEmpty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ligne {row}, colonne {col}, vide, appuyer pour jouer'**
+  String semanticsCellEmpty(int row, int col);
+
+  /// No description provided for @semanticsCellPlayed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ligne {row}, colonne {col}, {mark}'**
+  String semanticsCellPlayed(int row, int col, String mark);
+
+  /// No description provided for @semanticsGameBoard.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plateau de jeu'**
+  String get semanticsGameBoard;
+
+  /// No description provided for @semanticsWinningLine.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ligne gagnante'**
+  String get semanticsWinningLine;
+
+  /// No description provided for @semanticsScoreSummary.
+  ///
+  /// In fr, this message translates to:
+  /// **'{wins} victoires, {draws} nuls, {losses} défaites'**
+  String semanticsScoreSummary(int wins, int draws, int losses);
 }
 
 class _AppLocalizationsDelegate

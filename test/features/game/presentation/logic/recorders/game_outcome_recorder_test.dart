@@ -11,6 +11,7 @@ import 'package:tictactoe/features/game/domain/entities/score_entity.dart';
 import 'package:tictactoe/features/game/domain/entities/type_player_enum.dart';
 import 'package:tictactoe/features/game/presentation/logic/controllers/game_controller.dart';
 import 'package:tictactoe/features/game/presentation/logic/controllers/score_controller.dart';
+import 'package:tictactoe/features/game/presentation/logic/game_ui_state.dart';
 import 'package:tictactoe/features/game/presentation/logic/recorders/game_outcome_recorder.dart';
 import 'package:tictactoe/features/game/presentation/logic/providers/score_providers.dart';
 
@@ -21,15 +22,17 @@ import '../../../../../helpers/provider_helpers.dart';
 /// Overrides [build] so no AI strategy or timer logic is involved.
 class _FakeGameController extends GameController {
   @override
-  GameStateEntity build(GameConfigEntity config) {
-    return GameStateEntity.inProgress(
-      board: BoardEntity.empty(),
-      turn: config.humanMark,
-      humanMark: config.humanMark,
+  GameUiState build(GameConfigEntity config) {
+    return GameUiState(
+      game: GameStateEntity.inProgress(
+        board: BoardEntity.empty(),
+        turn: config.humanMark,
+        humanMark: config.humanMark,
+      ),
     );
   }
 
-  void emit(GameStateEntity newState) => state = newState;
+  void emit(GameStateEntity newState) => state = GameUiState(game: newState);
 }
 
 const _config = GameConfigEntity(

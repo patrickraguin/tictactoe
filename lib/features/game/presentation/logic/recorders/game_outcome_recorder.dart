@@ -5,6 +5,7 @@ import '../../../domain/entities/game_config_entity.dart';
 import '../../../domain/entities/game_state_entity.dart';
 import '../controllers/game_controller.dart';
 import '../controllers/score_controller.dart';
+import '../game_ui_state.dart';
 
 part 'game_outcome_recorder.g.dart';
 
@@ -20,12 +21,16 @@ class GameOutcomeRecorder extends _$GameOutcomeRecorder {
   @override
   void build(GameConfigEntity config) {
     final log = ref.read(loggerProvider);
-    ref.listen<GameStateEntity>(
+    ref.listen<GameUiState>(
       gameControllerProvider(config),
       (previous, next) async {
-        if (previous != null && previous.isOver) return;
+        // Record only on the exact transition from in-progress to game-over.
+        final justEnded =
+            (previous == null || !previous.game.isOver) && next.game.isOver;
+        if (!justEnded) return;
+
         final controller = ref.read(scoreControllerProvider.notifier);
-        switch (next) {
+        switch (next.game) {
           case WonEntity(:final winner, :final humanMark):
             if (winner == humanMark) {
               log.info('Outcome recorded: win', tag: _tag);
@@ -38,7 +43,7 @@ class GameOutcomeRecorder extends _$GameOutcomeRecorder {
             log.info('Outcome recorded: draw', tag: _tag);
             await controller.recordDraw();
           case InProgressEntity():
-            break;
+            break; // unreachable: justEnded guard ensures next.game.isOver
         }
       },
     );

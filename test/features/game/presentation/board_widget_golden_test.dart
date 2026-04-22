@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:tictactoe/core/l10n/app_localizations.dart';
 import 'package:tictactoe/features/game/domain/entities/board_entity.dart';
 import 'package:tictactoe/features/game/domain/entities/cell_mark_enum.dart';
 import 'package:tictactoe/features/game/domain/entities/game_state_entity.dart';
@@ -20,13 +21,15 @@ void main() {
     );
 
     await tester.pumpWidget(MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       theme: ThemeData(useMaterial3: true),
       home: Scaffold(
         body: Center(
           child: SizedBox(
             width: 300,
             height: 300,
-            child: BoardWidget(state: state, onCellTap: (_) {}),
+            child: BoardWidget(state: state, cpuThinking: false, onCellTap: (_) {}),
           ),
         ),
       ),

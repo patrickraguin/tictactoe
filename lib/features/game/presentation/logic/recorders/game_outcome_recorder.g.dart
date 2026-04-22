@@ -74,7 +74,7 @@ final class GameOutcomeRecorderProvider
 }
 
 String _$gameOutcomeRecorderHash() =>
-    r'a6ae22f0edb78d00b0ebc6da498477e84a6caa0c';
+    r'103067af1dc9d02e13981bee46549cbd6679873a';
 
 /// Observateur des fins de partie chargé de persister le score.
 ///

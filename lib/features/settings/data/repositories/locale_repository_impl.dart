@@ -1,5 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../../core/result/result.dart';
 import '../../domain/entities/app_locale.dart';
 import '../../domain/repositories/locale_repository.dart';
 
@@ -11,16 +12,26 @@ class LocaleRepositoryImpl implements LocaleRepository {
   static const _localeKey = 'locale';
 
   @override
-  Future<AppLocale> load() async =>
-      AppLocale.fromCode(_prefs.getString(_localeKey));
+  Future<Result<AppLocale>> load() async {
+    try {
+      return Success(AppLocale.fromCode(_prefs.getString(_localeKey)));
+    } catch (e) {
+      return Error(StorageFailure(e.toString()));
+    }
+  }
 
   @override
-  Future<void> save(AppLocale locale) async {
-    final code = locale.languageCode;
-    if (code == null) {
-      await _prefs.remove(_localeKey);
-    } else {
-      await _prefs.setString(_localeKey, code);
+  Future<Result<Unit>> save(AppLocale locale) async {
+    try {
+      final code = locale.languageCode;
+      if (code == null) {
+        await _prefs.remove(_localeKey);
+      } else {
+        await _prefs.setString(_localeKey, code);
+      }
+      return Success(Unit.instance);
+    } catch (e) {
+      return Error(StorageFailure(e.toString()));
     }
   }
 }

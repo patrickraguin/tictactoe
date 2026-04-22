@@ -10,28 +10,37 @@ part of 'game_controller.dart';
 // ignore_for_file: type=lint, type=warning
 /// Contrôleur principal de la partie (Riverpod Notifier).
 ///
-/// Gère la machine à états de [GameStateEntity] : validation des coups humains,
+/// Gère la machine à états de [GameUiState] : validation des coups humains,
 /// déclenchement asynchrone du coup CPU (avec délai d'attente simulé)
-/// et réinitialisation via [restart]. La stratégie IA est instanciée une
-/// seule fois à la construction et réutilisée pour toute la durée de vie.
+/// et réinitialisation via [restart]. La stratégie IA est injectée via
+/// [aiStrategyProvider] pour permettre l'override en test.
+///
+/// [cpuThinking] est un état de présentation (spinner UI) maintenu dans
+/// [GameUiState] et non dans [GameStateEntity] (domaine pur).
 
 @ProviderFor(GameController)
 const gameControllerProvider = GameControllerFamily._();
 
 /// Contrôleur principal de la partie (Riverpod Notifier).
 ///
-/// Gère la machine à états de [GameStateEntity] : validation des coups humains,
+/// Gère la machine à états de [GameUiState] : validation des coups humains,
 /// déclenchement asynchrone du coup CPU (avec délai d'attente simulé)
-/// et réinitialisation via [restart]. La stratégie IA est instanciée une
-/// seule fois à la construction et réutilisée pour toute la durée de vie.
+/// et réinitialisation via [restart]. La stratégie IA est injectée via
+/// [aiStrategyProvider] pour permettre l'override en test.
+///
+/// [cpuThinking] est un état de présentation (spinner UI) maintenu dans
+/// [GameUiState] et non dans [GameStateEntity] (domaine pur).
 final class GameControllerProvider
-    extends $NotifierProvider<GameController, GameStateEntity> {
+    extends $NotifierProvider<GameController, GameUiState> {
   /// Contrôleur principal de la partie (Riverpod Notifier).
   ///
-  /// Gère la machine à états de [GameStateEntity] : validation des coups humains,
+  /// Gère la machine à états de [GameUiState] : validation des coups humains,
   /// déclenchement asynchrone du coup CPU (avec délai d'attente simulé)
-  /// et réinitialisation via [restart]. La stratégie IA est instanciée une
-  /// seule fois à la construction et réutilisée pour toute la durée de vie.
+  /// et réinitialisation via [restart]. La stratégie IA est injectée via
+  /// [aiStrategyProvider] pour permettre l'override en test.
+  ///
+  /// [cpuThinking] est un état de présentation (spinner UI) maintenu dans
+  /// [GameUiState] et non dans [GameStateEntity] (domaine pur).
   const GameControllerProvider._({
     required GameControllerFamily super.from,
     required GameConfigEntity super.argument,
@@ -58,10 +67,10 @@ final class GameControllerProvider
   GameController create() => GameController();
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(GameStateEntity value) {
+  Override overrideWithValue(GameUiState value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<GameStateEntity>(value),
+      providerOverride: $SyncValueProvider<GameUiState>(value),
     );
   }
 
@@ -76,22 +85,25 @@ final class GameControllerProvider
   }
 }
 
-String _$gameControllerHash() => r'21f45b6ef93994ff1393aadeafa818d864cd73b9';
+String _$gameControllerHash() => r'e3e63b31fa6f6799c5aa5ff84e5a5a997a40ec20';
 
 /// Contrôleur principal de la partie (Riverpod Notifier).
 ///
-/// Gère la machine à états de [GameStateEntity] : validation des coups humains,
+/// Gère la machine à états de [GameUiState] : validation des coups humains,
 /// déclenchement asynchrone du coup CPU (avec délai d'attente simulé)
-/// et réinitialisation via [restart]. La stratégie IA est instanciée une
-/// seule fois à la construction et réutilisée pour toute la durée de vie.
+/// et réinitialisation via [restart]. La stratégie IA est injectée via
+/// [aiStrategyProvider] pour permettre l'override en test.
+///
+/// [cpuThinking] est un état de présentation (spinner UI) maintenu dans
+/// [GameUiState] et non dans [GameStateEntity] (domaine pur).
 
 final class GameControllerFamily extends $Family
     with
         $ClassFamilyOverride<
           GameController,
-          GameStateEntity,
-          GameStateEntity,
-          GameStateEntity,
+          GameUiState,
+          GameUiState,
+          GameUiState,
           GameConfigEntity
         > {
   const GameControllerFamily._()
@@ -105,10 +117,13 @@ final class GameControllerFamily extends $Family
 
   /// Contrôleur principal de la partie (Riverpod Notifier).
   ///
-  /// Gère la machine à états de [GameStateEntity] : validation des coups humains,
+  /// Gère la machine à états de [GameUiState] : validation des coups humains,
   /// déclenchement asynchrone du coup CPU (avec délai d'attente simulé)
-  /// et réinitialisation via [restart]. La stratégie IA est instanciée une
-  /// seule fois à la construction et réutilisée pour toute la durée de vie.
+  /// et réinitialisation via [restart]. La stratégie IA est injectée via
+  /// [aiStrategyProvider] pour permettre l'override en test.
+  ///
+  /// [cpuThinking] est un état de présentation (spinner UI) maintenu dans
+  /// [GameUiState] et non dans [GameStateEntity] (domaine pur).
 
   GameControllerProvider call(GameConfigEntity config) =>
       GameControllerProvider._(argument: config, from: this);
@@ -119,26 +134,29 @@ final class GameControllerFamily extends $Family
 
 /// Contrôleur principal de la partie (Riverpod Notifier).
 ///
-/// Gère la machine à états de [GameStateEntity] : validation des coups humains,
+/// Gère la machine à états de [GameUiState] : validation des coups humains,
 /// déclenchement asynchrone du coup CPU (avec délai d'attente simulé)
-/// et réinitialisation via [restart]. La stratégie IA est instanciée une
-/// seule fois à la construction et réutilisée pour toute la durée de vie.
+/// et réinitialisation via [restart]. La stratégie IA est injectée via
+/// [aiStrategyProvider] pour permettre l'override en test.
+///
+/// [cpuThinking] est un état de présentation (spinner UI) maintenu dans
+/// [GameUiState] et non dans [GameStateEntity] (domaine pur).
 
-abstract class _$GameController extends $Notifier<GameStateEntity> {
+abstract class _$GameController extends $Notifier<GameUiState> {
   late final _$args = ref.$arg as GameConfigEntity;
   GameConfigEntity get config => _$args;
 
-  GameStateEntity build(GameConfigEntity config);
+  GameUiState build(GameConfigEntity config);
   @$mustCallSuper
   @override
   void runBuild() {
     final created = build(_$args);
-    final ref = this.ref as $Ref<GameStateEntity, GameStateEntity>;
+    final ref = this.ref as $Ref<GameUiState, GameUiState>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<GameStateEntity, GameStateEntity>,
-              GameStateEntity,
+              AnyNotifier<GameUiState, GameUiState>,
+              GameUiState,
               Object?,
               Object?
             >;

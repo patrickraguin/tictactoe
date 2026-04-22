@@ -1,34 +1,29 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n_ext.dart';
 import '../../../../core/router/app_router.dart';
 import '../../domain/entities/cell_mark_enum.dart';
 import '../../domain/entities/difficulty_enum.dart';
 import '../../domain/entities/type_player_enum.dart';
-import '../../domain/entities/game_config_entity.dart';
+import '../logic/config_notifier.dart';
 
 /// Page de configuration d'une partie : choix du symbole, du premier joueur
 /// et du niveau de difficulté avant de lancer la partie.
 ///
-/// Utilise un [StatefulWidget] pour gérer l'état éphémère des sélections
-/// (symbole, premier joueur, difficulté) avant de construire le [GameConfigEntity].
+/// L'état éphémère des sélections est géré par [ConfigNotifier] (auto-dispose) :
+/// chaque ouverture repart des valeurs par défaut (X / Humain / Difficile).
 @RoutePage()
-class ConfigPage extends StatefulWidget {
+class ConfigPage extends ConsumerWidget {
   const ConfigPage({super.key});
 
   @override
-  State<ConfigPage> createState() => _ConfigPageState();
-}
-
-class _ConfigPageState extends State<ConfigPage> {
-  CellMarkEnum _mark = CellMarkEnum.x;
-  TypePlayerEnum _first = TypePlayerEnum.human;
-  DifficultyEnum _difficulty = DifficultyEnum.hard;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final config = ref.watch(configNotifierProvider);
+    final notifier = ref.read(configNotifierProvider.notifier);
     final l10n = context.l10n;
+
     return Scaffold(
       appBar: AppBar(title: Text(l10n.configPageTitle)),
       body: SafeArea(
@@ -43,8 +38,8 @@ class _ConfigPageState extends State<ConfigPage> {
                   ButtonSegment(value: CellMarkEnum.x, label: Text('X')),
                   ButtonSegment(value: CellMarkEnum.o, label: Text('O')),
                 ],
-                selected: {_mark},
-                onSelectionChanged: (s) => setState(() => _mark = s.first),
+                selected: {config.humanMark},
+                onSelectionChanged: (s) => notifier.setMark(s.first),
               ),
               const SizedBox(height: 24),
               _SectionLabel(l10n.configWhoStarts),
@@ -63,8 +58,8 @@ class _ConfigPageState extends State<ConfigPage> {
                     label: Text(l10n.configFirstPlayerRandom),
                   ),
                 ],
-                selected: {_first},
-                onSelectionChanged: (s) => setState(() => _first = s.first),
+                selected: {config.firstPlayer},
+                onSelectionChanged: (s) => notifier.setFirstPlayer(s.first),
               ),
               const SizedBox(height: 24),
               _SectionLabel(l10n.configDifficulty),
@@ -83,25 +78,20 @@ class _ConfigPageState extends State<ConfigPage> {
                     label: Text(l10n.configDifficultyHard),
                   ),
                 ],
-                selected: {_difficulty},
-                onSelectionChanged: (s) =>
-                    setState(() => _difficulty = s.first),
+                selected: {config.difficulty},
+                onSelectionChanged: (s) => notifier.setDifficulty(s.first),
               ),
               const Spacer(),
               FilledButton.icon(
                 icon: const Icon(Icons.play_arrow),
                 label: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 12),
-                  child: Text(l10n.configStartButton, style: const TextStyle(fontSize: 18)),
+                  child: Text(
+                    l10n.configStartButton,
+                    style: const TextStyle(fontSize: 18),
+                  ),
                 ),
-                onPressed: () {
-                  final config = GameConfigEntity(
-                    humanMark: _mark,
-                    firstPlayer: _first,
-                    difficulty: _difficulty,
-                  );
-                  context.router.push(GameRoute(config: config));
-                },
+                onPressed: () => context.router.push(GameRoute(config: config)),
               ),
             ],
           ),

@@ -40,6 +40,8 @@ class ScoreController extends _$ScoreController {
     if (current == null) return;
     final next = update(current);
     state = AsyncData(next);
-    await ref.read(scoreRepositoryProvider).save(next);
+    final result = await ref.read(scoreRepositoryProvider).save(next);
+    // Rollback to previous value if persistence fails.
+    if (result is Error) state = AsyncData(current);
   }
 }

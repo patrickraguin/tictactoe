@@ -32,18 +32,28 @@ class ScorePanel extends ConsumerWidget {
                   color: Theme.of(context).colorScheme.error,
                 ),
           ),
+          const SizedBox(width: 4),
+          TextButton(
+            onPressed: () => ref.invalidate(scoreControllerProvider),
+            child: Text(l10n.scoreRetry),
+          ),
         ],
       ),
-      data: (score) => Card(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              _ScoreChunk(label: l10n.scoreWins, value: score.wins),
-              _ScoreChunk(label: l10n.scoreDraws, value: score.draws),
-              _ScoreChunk(label: l10n.scoreLosses, value: score.losses),
-            ],
+      data: (score) => Semantics(
+        label: l10n.semanticsScoreSummary(score.wins, score.draws, score.losses),
+        // Suppress individual _ScoreChunk texts to avoid redundant reading.
+        excludeSemantics: true,
+        child: Card(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _ScoreChunk(label: l10n.scoreWins, value: score.wins),
+                _ScoreChunk(label: l10n.scoreDraws, value: score.draws),
+                _ScoreChunk(label: l10n.scoreLosses, value: score.losses),
+              ],
+            ),
           ),
         ),
       ),

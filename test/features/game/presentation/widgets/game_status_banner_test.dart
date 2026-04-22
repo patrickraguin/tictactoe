@@ -39,7 +39,7 @@ final _draw = GameStateEntity.draw(
 void main() {
   group('GameStatusBanner', () {
     testWidgets('shows "Your turn" when human plays next', (tester) async {
-      await tester.pumpWidget(_wrap(GameStatusBanner(state: _inProgress)));
+      await tester.pumpWidget(_wrap(GameStatusBanner(state: _inProgress, cpuThinking: false)));
       await tester.pumpAndSettle();
 
       // "Your turn" in English locale
@@ -47,7 +47,7 @@ void main() {
     });
 
     testWidgets('shows win message when human wins', (tester) async {
-      await tester.pumpWidget(_wrap(GameStatusBanner(state: _wonByHuman)));
+      await tester.pumpWidget(_wrap(GameStatusBanner(state: _wonByHuman, cpuThinking: false)));
       await tester.pumpAndSettle();
 
       expect(find.text('You win!'), findsOneWidget);
@@ -55,7 +55,7 @@ void main() {
     });
 
     testWidgets('shows draw message on draw', (tester) async {
-      await tester.pumpWidget(_wrap(GameStatusBanner(state: _draw)));
+      await tester.pumpWidget(_wrap(GameStatusBanner(state: _draw, cpuThinking: false)));
       await tester.pumpAndSettle();
 
       expect(find.text('Draw.'), findsOneWidget);

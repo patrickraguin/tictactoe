@@ -10,25 +10,22 @@ part of 'locale_controller.dart';
 // ignore_for_file: type=lint, type=warning
 /// Contrôleur de la locale applicative (keepAlive).
 ///
-/// Charge la préférence de langue depuis [SharedPreferences] à l'initialisation.
+/// Charge la préférence de langue depuis [LocaleRepository] à l'initialisation.
 /// `null` signifie « utiliser la locale système ».
-/// Persisté sous la clé [_localeKey] ('fr', 'en', ou absent).
 
 @ProviderFor(LocaleController)
 const localeControllerProvider = LocaleControllerProvider._();
 
 /// Contrôleur de la locale applicative (keepAlive).
 ///
-/// Charge la préférence de langue depuis [SharedPreferences] à l'initialisation.
+/// Charge la préférence de langue depuis [LocaleRepository] à l'initialisation.
 /// `null` signifie « utiliser la locale système ».
-/// Persisté sous la clé [_localeKey] ('fr', 'en', ou absent).
 final class LocaleControllerProvider
     extends $AsyncNotifierProvider<LocaleController, Locale?> {
   /// Contrôleur de la locale applicative (keepAlive).
   ///
-  /// Charge la préférence de langue depuis [SharedPreferences] à l'initialisation.
+  /// Charge la préférence de langue depuis [LocaleRepository] à l'initialisation.
   /// `null` signifie « utiliser la locale système ».
-  /// Persisté sous la clé [_localeKey] ('fr', 'en', ou absent).
   const LocaleControllerProvider._()
     : super(
         from: null,
@@ -48,13 +45,12 @@ final class LocaleControllerProvider
   LocaleController create() => LocaleController();
 }
 
-String _$localeControllerHash() => r'5bdd3af8687380d4ae5657a96a79feaa75f86426';
+String _$localeControllerHash() => r'c86444329844ffab40413ac2889a6da78db6f0b1';
 
 /// Contrôleur de la locale applicative (keepAlive).
 ///
-/// Charge la préférence de langue depuis [SharedPreferences] à l'initialisation.
+/// Charge la préférence de langue depuis [LocaleRepository] à l'initialisation.
 /// `null` signifie « utiliser la locale système ».
-/// Persisté sous la clé [_localeKey] ('fr', 'en', ou absent).
 
 abstract class _$LocaleController extends $AsyncNotifier<Locale?> {
   FutureOr<Locale?> build();

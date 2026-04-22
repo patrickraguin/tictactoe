@@ -46,6 +46,7 @@
   "scoreDraws": "Draws",
   "scoreLosses": "Losses",
   "scoreLoadError": "Could not load score",
+  "scoreRetry": "Retry",
 
   "settingsPageTitle": "Settings",
   "settingsLanguage": "Language",
@@ -53,5 +54,31 @@
   "settingsLanguageFr": "French",
   "settingsLanguageEn": "English",
 
-  "settingsVersion": "Version"
+  "settingsVersion": "Version",
+
+  "semanticsCellEmpty": "Row {row}, column {col}, empty, tap to play",
+  "@semanticsCellEmpty": {
+    "placeholders": {
+      "row": { "type": "int" },
+      "col": { "type": "int" }
+    }
+  },
+  "semanticsCellPlayed": "Row {row}, column {col}, {mark}",
+  "@semanticsCellPlayed": {
+    "placeholders": {
+      "row": { "type": "int" },
+      "col": { "type": "int" },
+      "mark": { "type": "String" }
+    }
+  },
+  "semanticsGameBoard": "Game board",
+  "semanticsWinningLine": "Winning line",
+  "semanticsScoreSummary": "{wins} wins, {draws} draws, {losses} losses",
+  "@semanticsScoreSummary": {
+    "placeholders": {
+      "wins": { "type": "int" },
+      "draws": { "type": "int" },
+      "losses": { "type": "int" }
+    }
+  }
 }

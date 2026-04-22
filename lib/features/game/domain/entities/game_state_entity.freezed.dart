@@ -154,10 +154,10 @@ return draw(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( BoardEntity board,  CellMarkEnum turn,  CellMarkEnum humanMark,  bool cpuThinking)?  inProgress,TResult Function( BoardEntity board,  CellMarkEnum winner,  List<int> line,  CellMarkEnum humanMark)?  won,TResult Function( BoardEntity board,  CellMarkEnum humanMark)?  draw,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( BoardEntity board,  CellMarkEnum turn,  CellMarkEnum humanMark)?  inProgress,TResult Function( BoardEntity board,  CellMarkEnum winner,  List<int> line,  CellMarkEnum humanMark)?  won,TResult Function( BoardEntity board,  CellMarkEnum humanMark)?  draw,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case InProgressEntity() when inProgress != null:
-return inProgress(_that.board,_that.turn,_that.humanMark,_that.cpuThinking);case WonEntity() when won != null:
+return inProgress(_that.board,_that.turn,_that.humanMark);case WonEntity() when won != null:
 return won(_that.board,_that.winner,_that.line,_that.humanMark);case DrawEntity() when draw != null:
 return draw(_that.board,_that.humanMark);case _:
   return orElse();
@@ -177,10 +177,10 @@ return draw(_that.board,_that.humanMark);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( BoardEntity board,  CellMarkEnum turn,  CellMarkEnum humanMark,  bool cpuThinking)  inProgress,required TResult Function( BoardEntity board,  CellMarkEnum winner,  List<int> line,  CellMarkEnum humanMark)  won,required TResult Function( BoardEntity board,  CellMarkEnum humanMark)  draw,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( BoardEntity board,  CellMarkEnum turn,  CellMarkEnum humanMark)  inProgress,required TResult Function( BoardEntity board,  CellMarkEnum winner,  List<int> line,  CellMarkEnum humanMark)  won,required TResult Function( BoardEntity board,  CellMarkEnum humanMark)  draw,}) {final _that = this;
 switch (_that) {
 case InProgressEntity():
-return inProgress(_that.board,_that.turn,_that.humanMark,_that.cpuThinking);case WonEntity():
+return inProgress(_that.board,_that.turn,_that.humanMark);case WonEntity():
 return won(_that.board,_that.winner,_that.line,_that.humanMark);case DrawEntity():
 return draw(_that.board,_that.humanMark);}
 }
@@ -196,10 +196,10 @@ return draw(_that.board,_that.humanMark);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( BoardEntity board,  CellMarkEnum turn,  CellMarkEnum humanMark,  bool cpuThinking)?  inProgress,TResult? Function( BoardEntity board,  CellMarkEnum winner,  List<int> line,  CellMarkEnum humanMark)?  won,TResult? Function( BoardEntity board,  CellMarkEnum humanMark)?  draw,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( BoardEntity board,  CellMarkEnum turn,  CellMarkEnum humanMark)?  inProgress,TResult? Function( BoardEntity board,  CellMarkEnum winner,  List<int> line,  CellMarkEnum humanMark)?  won,TResult? Function( BoardEntity board,  CellMarkEnum humanMark)?  draw,}) {final _that = this;
 switch (_that) {
 case InProgressEntity() when inProgress != null:
-return inProgress(_that.board,_that.turn,_that.humanMark,_that.cpuThinking);case WonEntity() when won != null:
+return inProgress(_that.board,_that.turn,_that.humanMark);case WonEntity() when won != null:
 return won(_that.board,_that.winner,_that.line,_that.humanMark);case DrawEntity() when draw != null:
 return draw(_that.board,_that.humanMark);case _:
   return null;
@@ -213,13 +213,12 @@ return draw(_that.board,_that.humanMark);case _:
 
 
 class InProgressEntity extends GameStateEntity {
-  const InProgressEntity({required this.board, required this.turn, required this.humanMark, this.cpuThinking = false}): super._();
+  const InProgressEntity({required this.board, required this.turn, required this.humanMark}): super._();
   
 
 @override final  BoardEntity board;
  final  CellMarkEnum turn;
 @override final  CellMarkEnum humanMark;
-@JsonKey() final  bool cpuThinking;
 
 /// Create a copy of GameStateEntity
 /// with the given fields replaced by the non-null parameter values.
@@ -231,16 +230,16 @@ $InProgressEntityCopyWith<InProgressEntity> get copyWith => _$InProgressEntityCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is InProgressEntity&&(identical(other.board, board) || other.board == board)&&(identical(other.turn, turn) || other.turn == turn)&&(identical(other.humanMark, humanMark) || other.humanMark == humanMark)&&(identical(other.cpuThinking, cpuThinking) || other.cpuThinking == cpuThinking));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is InProgressEntity&&(identical(other.board, board) || other.board == board)&&(identical(other.turn, turn) || other.turn == turn)&&(identical(other.humanMark, humanMark) || other.humanMark == humanMark));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,board,turn,humanMark,cpuThinking);
+int get hashCode => Object.hash(runtimeType,board,turn,humanMark);
 
 @override
 String toString() {
-  return 'GameStateEntity.inProgress(board: $board, turn: $turn, humanMark: $humanMark, cpuThinking: $cpuThinking)';
+  return 'GameStateEntity.inProgress(board: $board, turn: $turn, humanMark: $humanMark)';
 }
 
 
@@ -251,7 +250,7 @@ abstract mixin class $InProgressEntityCopyWith<$Res> implements $GameStateEntity
   factory $InProgressEntityCopyWith(InProgressEntity value, $Res Function(InProgressEntity) _then) = _$InProgressEntityCopyWithImpl;
 @override @useResult
 $Res call({
- BoardEntity board, CellMarkEnum turn, CellMarkEnum humanMark, bool cpuThinking
+ BoardEntity board, CellMarkEnum turn, CellMarkEnum humanMark
 });
 
 
@@ -268,13 +267,12 @@ class _$InProgressEntityCopyWithImpl<$Res>
 
 /// Create a copy of GameStateEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? board = null,Object? turn = null,Object? humanMark = null,Object? cpuThinking = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? board = null,Object? turn = null,Object? humanMark = null,}) {
   return _then(InProgressEntity(
 board: null == board ? _self.board : board // ignore: cast_nullable_to_non_nullable
 as BoardEntity,turn: null == turn ? _self.turn : turn // ignore: cast_nullable_to_non_nullable
 as CellMarkEnum,humanMark: null == humanMark ? _self.humanMark : humanMark // ignore: cast_nullable_to_non_nullable
-as CellMarkEnum,cpuThinking: null == cpuThinking ? _self.cpuThinking : cpuThinking // ignore: cast_nullable_to_non_nullable
-as bool,
+as CellMarkEnum,
   ));
 }
 

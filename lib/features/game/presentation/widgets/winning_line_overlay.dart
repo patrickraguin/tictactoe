@@ -17,14 +17,18 @@ class WinningLineOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IgnorePointer(
-      child: TweenAnimationBuilder<double>(
-        tween: Tween(begin: 0, end: 1),
-        duration: const Duration(milliseconds: 400),
-        curve: Curves.easeOut,
-        builder: (context, t, _) => CustomPaint(
-          painter: _LinePainter(line: line, color: color, progress: t),
-          size: Size.infinite,
+    // ExcludeSemantics: purely visual element; the game outcome is already
+    // announced by GameStatusBanner (liveRegion).
+    return ExcludeSemantics(
+      child: IgnorePointer(
+        child: TweenAnimationBuilder<double>(
+          tween: Tween(begin: 0, end: 1),
+          duration: const Duration(milliseconds: 400),
+          curve: Curves.easeOut,
+          builder: (context, t, _) => CustomPaint(
+            painter: _LinePainter(line: line, color: color, progress: t),
+            size: Size.infinite,
+          ),
         ),
       ),
     );

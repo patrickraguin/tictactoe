@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tictactoe/core/l10n/app_localizations.dart';
 import 'package:tictactoe/core/router/app_router.dart';
@@ -24,13 +25,15 @@ class _FakeStackRouter extends Fake implements StackRouter {
   }
 }
 
-Widget _buildApp(_FakeStackRouter router) => MaterialApp(
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      home: StackRouterScope(
-        controller: router,
-        stateHash: 0,
-        child: const ConfigPage(),
+Widget _buildApp(_FakeStackRouter router) => ProviderScope(
+      child: MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: StackRouterScope(
+          controller: router,
+          stateHash: 0,
+          child: const ConfigPage(),
+        ),
       ),
     );
 

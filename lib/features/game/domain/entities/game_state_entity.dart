@@ -19,7 +19,6 @@ sealed class GameStateEntity with _$GameStateEntity {
     required BoardEntity board,
     required CellMarkEnum turn,
     required CellMarkEnum humanMark,
-    @Default(false) bool cpuThinking,
   }) = InProgressEntity;
 
   const factory GameStateEntity.won({

@@ -22,7 +22,7 @@ class GamePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(gameOutcomeRecorderProvider(config));
-    final state = ref.watch(gameControllerProvider(config));
+    final uiState = ref.watch(gameControllerProvider(config));
     final controller = ref.read(gameControllerProvider(config).notifier);
     final l10n = context.l10n;
 
@@ -42,16 +42,17 @@ class GamePage extends ConsumerWidget {
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-              GameStatusBanner(state: state),
+              GameStatusBanner(state: uiState.game, cpuThinking: uiState.cpuThinking),
               const SizedBox(height: 16),
               BoardWidget(
-                state: state,
+                state: uiState.game,
+                cpuThinking: uiState.cpuThinking,
                 onCellTap: controller.playHumanMove,
               ),
               const Spacer(),
               const ScorePanel(),
               const SizedBox(height: 12),
-              if (state.isOver)
+              if (uiState.game.isOver)
                 GameEndActions(
                   onReplay: controller.restart,
                   onChangeConfig: () => context.router.maybePop(),
@@ -63,4 +64,3 @@ class GamePage extends ConsumerWidget {
     );
   }
 }
-
