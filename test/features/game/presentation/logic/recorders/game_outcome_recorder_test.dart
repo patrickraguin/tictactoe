@@ -84,7 +84,7 @@ void main() {
   /// Keeps the recorder alive and pre-initialises the score controller so
   /// that async mutations in recorder callbacks do not race with init.
   Future<void> activateRecorder(ProviderContainer container) async {
-    container.listen(gameOutcomeRecorderProvider(_config), (_, __) {});
+    container.listen(gameOutcomeRecorderProvider(_config), (_, _) {});
     await container.read(scoreControllerProvider.future);
   }
 

@@ -61,7 +61,7 @@ void main() {
         name: 'loadingProvider',
       );
 
-      container.listen(provider, (_, __) {});
+      container.listen(provider, (_, _) {});
 
       // At this point the provider is AsyncLoading — no debug or error log.
       verifyNever(() => logger.debug(any(), tag: any(named: 'tag')));

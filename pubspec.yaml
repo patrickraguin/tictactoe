@@ -14,18 +14,18 @@ dependencies:
   intl: ^0.20.2
 
   # State management
-  flutter_riverpod: ^3.0.0
+  flutter_riverpod: ^3.0.3
   riverpod_annotation: ^3.0.0
 
   # Immutable models
-  freezed_annotation: ^3.0.0
+  freezed_annotation: ^3.0.3
 
   # Routing
-  auto_route: ^10.0.0
+  auto_route: ^10.3.0
 
   # Local persistence
   shared_preferences: ^2.3.2
-  package_info_plus: ^9.0.0
+  package_info_plus: ^9.0.1
 
   # Pure Dart utilities (domain layer)
   meta: ^1.16.0
@@ -33,20 +33,20 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
   riverpod: any  # transitive via flutter_riverpod, needed for Override type in test helpers
 
   # Codegen
-  build_runner: ^2.4.13
-  freezed: ^3.0.0
-  riverpod_generator: ^3.0.0
-  auto_route_generator: ^10.2.4
+  build_runner: ^2.7.1
+  freezed: ^3.2.3
+  riverpod_generator: ^3.0.3
+  auto_route_generator: ^10.2.6
 
   # Lints / tests
   custom_lint: ^0.8.0
-  riverpod_lint: ^3.0.0
+  riverpod_lint: ^3.0.3
   fake_async: ^1.3.3
-  mocktail: ^1.0.4
+  mocktail: ^1.0.5
 
 flutter:
   uses-material-design: true

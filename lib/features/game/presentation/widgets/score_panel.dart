@@ -21,7 +21,7 @@ class ScorePanel extends ConsumerWidget {
         height: 48,
         child: Center(child: CircularProgressIndicator(strokeWidth: 2)),
       ),
-      error: (_, __) => Row(
+      error: (_, _) => Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(Icons.error_outline, size: 16, color: Theme.of(context).colorScheme.error),

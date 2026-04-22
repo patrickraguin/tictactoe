@@ -25,7 +25,7 @@ void main() {
   group('initial state', () {
     test('is InProgress with human turn when human goes first', () {
       final container = makeContainer();
-      final sub = container.listen(gameControllerProvider(_humanFirstConfig), (_, __) {});
+      final sub = container.listen(gameControllerProvider(_humanFirstConfig), (_, _) {});
       addTearDown(sub.close);
 
       final uiState = sub.read();
@@ -37,7 +37,7 @@ void main() {
 
     test('is InProgress with CPU turn when CPU goes first', () {
       final container = makeContainer();
-      final sub = container.listen(gameControllerProvider(_cpuFirstConfig), (_, __) {});
+      final sub = container.listen(gameControllerProvider(_cpuFirstConfig), (_, _) {});
       addTearDown(sub.close);
 
       final uiState = sub.read();
@@ -48,7 +48,7 @@ void main() {
 
     test('board is empty at start', () {
       final container = makeContainer();
-      final sub = container.listen(gameControllerProvider(_humanFirstConfig), (_, __) {});
+      final sub = container.listen(gameControllerProvider(_humanFirstConfig), (_, _) {});
       addTearDown(sub.close);
 
       expect(sub.read().game.board.cells.every((c) => c.isEmpty), isTrue);
@@ -58,7 +58,7 @@ void main() {
   group('playHumanMove', () {
     test('places human mark on the board', () {
       final container = makeContainer();
-      final sub = container.listen(gameControllerProvider(_humanFirstConfig), (_, __) {});
+      final sub = container.listen(gameControllerProvider(_humanFirstConfig), (_, _) {});
       addTearDown(sub.close);
 
       fakeAsync((fake) {
@@ -70,7 +70,7 @@ void main() {
 
     test('sets cpuThinking=true immediately after human plays', () {
       final container = makeContainer();
-      final sub = container.listen(gameControllerProvider(_humanFirstConfig), (_, __) {});
+      final sub = container.listen(gameControllerProvider(_humanFirstConfig), (_, _) {});
       addTearDown(sub.close);
 
       fakeAsync((fake) {
@@ -83,7 +83,7 @@ void main() {
 
     test('CPU plays exactly after 400 ms thinking delay', () {
       final container = makeContainer();
-      final sub = container.listen(gameControllerProvider(_humanFirstConfig), (_, __) {});
+      final sub = container.listen(gameControllerProvider(_humanFirstConfig), (_, _) {});
       addTearDown(sub.close);
 
       fakeAsync((fake) {
@@ -105,7 +105,7 @@ void main() {
     test('is ignored when it is not the human turn', () {
       final container = makeContainer();
       // CPU goes first → turn is O (CPU), human cannot play
-      final sub = container.listen(gameControllerProvider(_cpuFirstConfig), (_, __) {});
+      final sub = container.listen(gameControllerProvider(_cpuFirstConfig), (_, _) {});
       addTearDown(sub.close);
 
       // Board is empty, turn = O (CPU); human tries to play
@@ -121,7 +121,7 @@ void main() {
 
       fakeAsync((fake) {
         // Create subscription INSIDE fakeAsync so the build() microtask is in the fake zone
-        final sub = container.listen(gameControllerProvider(_cpuFirstConfig), (_, __) {});
+        final sub = container.listen(gameControllerProvider(_cpuFirstConfig), (_, _) {});
 
         // Flush microtask that starts _playCpuIfNeeded
         fake.flushMicrotasks();
@@ -139,7 +139,7 @@ void main() {
   group('restart', () {
     test('resets board to empty and returns to initial turn', () {
       final container = makeContainer();
-      final sub = container.listen(gameControllerProvider(_humanFirstConfig), (_, __) {});
+      final sub = container.listen(gameControllerProvider(_humanFirstConfig), (_, _) {});
       addTearDown(sub.close);
 
       fakeAsync((fake) {

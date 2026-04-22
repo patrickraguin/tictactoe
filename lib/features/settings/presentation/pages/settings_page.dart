@@ -54,7 +54,7 @@ class SettingsPage extends ConsumerWidget {
               subtitle: packageInfoAsync.when(
                 data: (info) => Text('${info.version}+${info.buildNumber}'),
                 loading: () => const Text('…'),
-                error: (_, __) => const Text('–'),
+                error: (_, _) => const Text('–'),
               ),
             ),
           ],
