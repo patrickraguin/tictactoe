@@ -60,21 +60,21 @@ ProviderContainer _makeContainer(GameStateEntity state) {
 void main() {
   setUpAll(registerScoreFallbacks);
 
-  final _inProgress = GameStateEntity.inProgress(
+  final inProgress = GameStateEntity.inProgress(
     board: BoardEntity.empty(),
     turn: CellMarkEnum.x,
     humanMark: CellMarkEnum.x,
   );
 
-  final _board = BoardEntity.empty()
+  final board = BoardEntity.empty()
       .place(0, CellMarkEnum.x)
       .place(1, CellMarkEnum.x)
       .place(2, CellMarkEnum.x)
       .place(3, CellMarkEnum.o)
       .place(4, CellMarkEnum.o);
 
-  final _won = GameStateEntity.won(
-    board: _board,
+  final won = GameStateEntity.won(
+    board: board,
     winner: CellMarkEnum.x,
     line: const [0, 1, 2],
     humanMark: CellMarkEnum.x,
@@ -85,7 +85,7 @@ void main() {
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.resetPhysicalSize);
 
-    final container = _makeContainer(_inProgress);
+    final container = _makeContainer(inProgress);
     await tester.pumpWidget(_buildApp(container));
     await tester.pumpAndSettle();
 
@@ -100,7 +100,7 @@ void main() {
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.resetPhysicalSize);
 
-    final container = _makeContainer(_won);
+    final container = _makeContainer(won);
     await tester.pumpWidget(_buildApp(container));
     await tester.pumpAndSettle();
 
