@@ -16,7 +16,7 @@ part of 'shared_prefs_provider.dart';
 /// ```
 
 @ProviderFor(sharedPreferencesInstance)
-const sharedPreferencesInstanceProvider = SharedPreferencesInstanceProvider._();
+final sharedPreferencesInstanceProvider = SharedPreferencesInstanceProvider._();
 
 /// Instance de [SharedPreferences] injectée au démarrage dans `main.dart`.
 ///
@@ -39,7 +39,7 @@ final class SharedPreferencesInstanceProvider
   /// ```dart
   /// sharedPreferencesInstanceProvider.overrideWithValue(prefs)
   /// ```
-  const SharedPreferencesInstanceProvider._()
+  SharedPreferencesInstanceProvider._()
     : super(
         from: null,
         argument: null,

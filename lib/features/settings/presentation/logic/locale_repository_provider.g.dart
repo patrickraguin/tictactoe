@@ -11,7 +11,7 @@ part of 'locale_repository_provider.dart';
 /// Fournit le [LocaleRepository] concret via [SharedPreferences].
 
 @ProviderFor(localeRepository)
-const localeRepositoryProvider = LocaleRepositoryProvider._();
+final localeRepositoryProvider = LocaleRepositoryProvider._();
 
 /// Fournit le [LocaleRepository] concret via [SharedPreferences].
 
@@ -24,7 +24,7 @@ final class LocaleRepositoryProvider
         >
     with $Provider<LocaleRepository> {
   /// Fournit le [LocaleRepository] concret via [SharedPreferences].
-  const LocaleRepositoryProvider._()
+  LocaleRepositoryProvider._()
     : super(
         from: null,
         argument: null,

@@ -19,7 +19,7 @@ part of 'game_controller.dart';
 /// [GameUiState] et non dans [GameStateEntity] (domaine pur).
 
 @ProviderFor(GameController)
-const gameControllerProvider = GameControllerFamily._();
+final gameControllerProvider = GameControllerFamily._();
 
 /// Contrôleur principal de la partie (Riverpod Notifier).
 ///
@@ -41,7 +41,7 @@ final class GameControllerProvider
   ///
   /// [cpuThinking] est un état de présentation (spinner UI) maintenu dans
   /// [GameUiState] et non dans [GameStateEntity] (domaine pur).
-  const GameControllerProvider._({
+  GameControllerProvider._({
     required GameControllerFamily super.from,
     required GameConfigEntity super.argument,
   }) : super(
@@ -106,7 +106,7 @@ final class GameControllerFamily extends $Family
           GameUiState,
           GameConfigEntity
         > {
-  const GameControllerFamily._()
+  GameControllerFamily._()
     : super(
         retry: null,
         name: r'gameControllerProvider',
@@ -150,7 +150,6 @@ abstract class _$GameController extends $Notifier<GameUiState> {
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build(_$args);
     final ref = this.ref as $Ref<GameUiState, GameUiState>;
     final element =
         ref.element
@@ -160,6 +159,6 @@ abstract class _$GameController extends $Notifier<GameUiState> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, () => build(_$args));
   }
 }

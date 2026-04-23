@@ -18,7 +18,7 @@ part of 'logger_provider.dart';
 /// ```
 
 @ProviderFor(logger)
-const loggerProvider = LoggerProvider._();
+final loggerProvider = LoggerProvider._();
 
 /// Provider du logger applicatif.
 ///
@@ -40,7 +40,7 @@ final class LoggerProvider
   /// ```dart
   /// loggerProvider.overrideWithValue(DatadogLogger())
   /// ```
-  const LoggerProvider._()
+  LoggerProvider._()
     : super(
         from: null,
         argument: null,

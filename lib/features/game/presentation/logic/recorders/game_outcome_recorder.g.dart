@@ -15,7 +15,7 @@ part of 'game_outcome_recorder.dart';
 /// Séparé de [GameController] pour respecter le principe de responsabilité unique.
 
 @ProviderFor(GameOutcomeRecorder)
-const gameOutcomeRecorderProvider = GameOutcomeRecorderFamily._();
+final gameOutcomeRecorderProvider = GameOutcomeRecorderFamily._();
 
 /// Observateur des fins de partie chargé de persister le score.
 ///
@@ -29,7 +29,7 @@ final class GameOutcomeRecorderProvider
   /// Écoute [GameController] via [ref.listen] et délègue l'enregistrement
   /// à [ScoreController] dès qu'une transition vers [WonEntity] ou [DrawEntity] est détectée.
   /// Séparé de [GameController] pour respecter le principe de responsabilité unique.
-  const GameOutcomeRecorderProvider._({
+  GameOutcomeRecorderProvider._({
     required GameOutcomeRecorderFamily super.from,
     required GameConfigEntity super.argument,
   }) : super(
@@ -91,7 +91,7 @@ final class GameOutcomeRecorderFamily extends $Family
           void,
           GameConfigEntity
         > {
-  const GameOutcomeRecorderFamily._()
+  GameOutcomeRecorderFamily._()
     : super(
         retry: null,
         name: r'gameOutcomeRecorderProvider',
@@ -127,7 +127,6 @@ abstract class _$GameOutcomeRecorder extends $Notifier<void> {
   @$mustCallSuper
   @override
   void runBuild() {
-    build(_$args);
     final ref = this.ref as $Ref<void, void>;
     final element =
         ref.element
@@ -137,6 +136,6 @@ abstract class _$GameOutcomeRecorder extends $Notifier<void> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, null);
+    element.handleCreate(ref, () => build(_$args));
   }
 }

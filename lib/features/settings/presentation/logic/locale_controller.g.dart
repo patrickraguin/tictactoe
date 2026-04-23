@@ -14,7 +14,7 @@ part of 'locale_controller.dart';
 /// `null` signifie « utiliser la locale système ».
 
 @ProviderFor(LocaleController)
-const localeControllerProvider = LocaleControllerProvider._();
+final localeControllerProvider = LocaleControllerProvider._();
 
 /// Contrôleur de la locale applicative (keepAlive).
 ///
@@ -26,7 +26,7 @@ final class LocaleControllerProvider
   ///
   /// Charge la préférence de langue depuis [LocaleRepository] à l'initialisation.
   /// `null` signifie « utiliser la locale système ».
-  const LocaleControllerProvider._()
+  LocaleControllerProvider._()
     : super(
         from: null,
         argument: null,
@@ -57,7 +57,6 @@ abstract class _$LocaleController extends $AsyncNotifier<Locale?> {
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
     final ref = this.ref as $Ref<AsyncValue<Locale?>, Locale?>;
     final element =
         ref.element
@@ -67,6 +66,6 @@ abstract class _$LocaleController extends $AsyncNotifier<Locale?> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, build);
   }
 }

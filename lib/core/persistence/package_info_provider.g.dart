@@ -12,7 +12,7 @@ part of 'package_info_provider.dart';
 /// Mis en cache pour toute la durée de vie de l'application.
 
 @ProviderFor(packageInfo)
-const packageInfoProvider = PackageInfoProvider._();
+final packageInfoProvider = PackageInfoProvider._();
 
 /// Fournit les informations du package (version, build number) depuis la plateforme.
 /// Mis en cache pour toute la durée de vie de l'application.
@@ -27,7 +27,7 @@ final class PackageInfoProvider
     with $FutureModifier<PackageInfo>, $FutureProvider<PackageInfo> {
   /// Fournit les informations du package (version, build number) depuis la plateforme.
   /// Mis en cache pour toute la durée de vie de l'application.
-  const PackageInfoProvider._()
+  PackageInfoProvider._()
     : super(
         from: null,
         argument: null,

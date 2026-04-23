@@ -17,7 +17,7 @@ part of 'score_controller.dart';
 /// Les transitions d'état sont loguées automatiquement par [AppProviderObserver].
 
 @ProviderFor(ScoreController)
-const scoreControllerProvider = ScoreControllerProvider._();
+final scoreControllerProvider = ScoreControllerProvider._();
 
 /// Gestionnaire d'état du score (Riverpod AsyncNotifier, keepAlive).
 ///
@@ -35,7 +35,7 @@ final class ScoreControllerProvider
   /// qui mettent à jour l'état en mémoire puis persistent immédiatement sur disque.
   ///
   /// Les transitions d'état sont loguées automatiquement par [AppProviderObserver].
-  const ScoreControllerProvider._()
+  ScoreControllerProvider._()
     : super(
         from: null,
         argument: null,
@@ -69,7 +69,6 @@ abstract class _$ScoreController extends $AsyncNotifier<ScoreEntity> {
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
     final ref = this.ref as $Ref<AsyncValue<ScoreEntity>, ScoreEntity>;
     final element =
         ref.element
@@ -79,6 +78,6 @@ abstract class _$ScoreController extends $AsyncNotifier<ScoreEntity> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, build);
   }
 }

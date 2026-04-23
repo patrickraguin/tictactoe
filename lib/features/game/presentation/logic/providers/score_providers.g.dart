@@ -10,13 +10,13 @@ part of 'score_providers.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(scoreRepository)
-const scoreRepositoryProvider = ScoreRepositoryProvider._();
+final scoreRepositoryProvider = ScoreRepositoryProvider._();
 
 final class ScoreRepositoryProvider
     extends
         $FunctionalProvider<ScoreRepository, ScoreRepository, ScoreRepository>
     with $Provider<ScoreRepository> {
-  const ScoreRepositoryProvider._()
+  ScoreRepositoryProvider._()
     : super(
         from: null,
         argument: null,
