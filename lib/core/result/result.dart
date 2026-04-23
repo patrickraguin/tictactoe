@@ -1,5 +1,3 @@
-// Modélisation explicite des succès et des erreurs pour les opérations de persistence.
-
 sealed class Result<T> {
   const Result();
 }
@@ -14,6 +12,17 @@ final class Error<T> extends Result<T> {
   final Failure failure;
 }
 
+extension ResultUnwrap<T> on Result<T> {
+  /// Extrait la valeur en cas de succès, ou lève une [StateError] si c'est une [Error].
+  /// À utiliser uniquement pour les use cases garantis infaillibles.
+  T unwrap() => switch (this) {
+        Success(:final value) => value,
+        Error(:final failure) => throw StateError(
+            'unwrap() appelé sur Error: ${failure.message}',
+          ),
+      };
+}
+
 // --- Failures ---
 
 sealed class Failure {
@@ -23,6 +32,11 @@ sealed class Failure {
 
 final class StorageFailure extends Failure {
   const StorageFailure(super.message);
+}
+
+/// Coup de jeu invalide (mauvais tour, case occupée, partie terminée).
+final class InvalidMoveFailure extends Failure {
+  const InvalidMoveFailure(super.message);
 }
 
 // --- Exception ---

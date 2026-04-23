@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:tictactoe/core/result/result.dart';
 import 'package:tictactoe/features/game/domain/entities/cell_mark_enum.dart';
 import 'package:tictactoe/features/game/domain/entities/difficulty_enum.dart';
 import 'package:tictactoe/features/game/domain/entities/game_config_entity.dart';
@@ -11,7 +12,7 @@ import 'package:tictactoe/features/game/domain/usecases/resolve_first_player.dar
 class _MockRandom extends Mock implements Random {}
 
 void main() {
-  group('resolveFirstPlayer', () {
+  group('ResolveFirstPlayer', () {
     GameConfigEntity makeConfig({
       required TypePlayerEnum firstPlayer,
       CellMarkEnum humanMark = CellMarkEnum.x,
@@ -23,39 +24,44 @@ void main() {
         );
 
     test('retourne le symbole humain quand firstPlayer est human', () {
-      final mark = resolveFirstPlayer(
+      final result = const ResolveFirstPlayer()(
         makeConfig(firstPlayer: TypePlayerEnum.human, humanMark: CellMarkEnum.o),
       );
-      expect(mark, CellMarkEnum.o);
+      expect(result.unwrap(), CellMarkEnum.o);
     });
 
     test('retourne le symbole CPU quand firstPlayer est cpu', () {
-      final mark = resolveFirstPlayer(
+      final result = const ResolveFirstPlayer()(
         makeConfig(firstPlayer: TypePlayerEnum.cpu, humanMark: CellMarkEnum.x),
       );
-      expect(mark, CellMarkEnum.o); // opponent de X
+      expect(result.unwrap(), CellMarkEnum.o); // opponent de X
     });
 
     test('retourne le symbole humain quand random donne true', () {
       final rng = _MockRandom();
       when(() => rng.nextBool()).thenReturn(true);
 
-      final mark = resolveFirstPlayer(
+      final result = ResolveFirstPlayer(random: rng)(
         makeConfig(firstPlayer: TypePlayerEnum.random, humanMark: CellMarkEnum.x),
-        random: rng,
       );
-      expect(mark, CellMarkEnum.x);
+      expect(result.unwrap(), CellMarkEnum.x);
     });
 
     test('retourne le symbole CPU quand random donne false', () {
       final rng = _MockRandom();
       when(() => rng.nextBool()).thenReturn(false);
 
-      final mark = resolveFirstPlayer(
+      final result = ResolveFirstPlayer(random: rng)(
         makeConfig(firstPlayer: TypePlayerEnum.random, humanMark: CellMarkEnum.x),
-        random: rng,
       );
-      expect(mark, CellMarkEnum.o); // opponent de X
+      expect(result.unwrap(), CellMarkEnum.o); // opponent de X
+    });
+
+    test('always returns Success', () {
+      final result = const ResolveFirstPlayer()(
+        makeConfig(firstPlayer: TypePlayerEnum.human),
+      );
+      expect(result, isA<Success<CellMarkEnum>>());
     });
   });
 }

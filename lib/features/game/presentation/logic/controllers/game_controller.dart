@@ -2,6 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../../core/logging/app_logger.dart';
 import '../../../../../core/logging/logger_provider.dart';
+import '../../../../../core/result/result.dart';
 import '../../../domain/ai/ai_strategy.dart';
 import '../../../domain/entities/board_entity.dart';
 import '../../../domain/entities/game_config_entity.dart';
@@ -26,7 +27,6 @@ part 'game_controller.g.dart';
 class GameController extends _$GameController {
   static const _tag = 'GameController';
 
-  /// Cached strategy for the lifetime of this controller instance.
   late AiStrategy _strategy;
   late AppLogger _log;
 
@@ -34,7 +34,7 @@ class GameController extends _$GameController {
   GameUiState build(GameConfigEntity config) {
     _log = ref.read(loggerProvider);
     _strategy = ref.watch(aiStrategyProvider(config.difficulty));
-    final firstMark = resolveFirstPlayer(config);
+    final firstMark = const ResolveFirstPlayer()(config).unwrap();
     final game = initialState(
       board: BoardEntity.empty(),
       firstToPlay: firstMark,
@@ -47,7 +47,6 @@ class GameController extends _$GameController {
     );
     if (firstMark != config.humanMark) {
       _log.info('CPU goes first, scheduling opening move', tag: _tag);
-      // Schedule CPU's opening move after the widget tree is ready.
       Future<void>.microtask(_playCpuIfNeeded);
     }
     return GameUiState(game: game);
@@ -59,8 +58,16 @@ class GameController extends _$GameController {
     if (current.turn != current.humanMark) return;
 
     _log.info('Human move: index=$index', tag: _tag);
-    state = state.copyWith(game: playMove(state: current, index: index, mark: current.humanMark));
-    await _playCpuIfNeeded();
+    final result = const PlayMove()(
+      PlayMoveParams(state: current, index: index, mark: current.humanMark),
+    );
+    switch (result) {
+      case Success(:final value):
+        state = state.copyWith(game: value);
+        await _playCpuIfNeeded();
+      case Error(:final failure):
+        _log.warning('Invalid human move at index=$index: ${failure.message}', tag: _tag);
+    }
   }
 
   void restart() {
@@ -76,7 +83,6 @@ class GameController extends _$GameController {
     state = state.copyWith(cpuThinking: true);
     await Future<void>.delayed(const Duration(milliseconds: 400));
 
-    // Guard against disposal during the delay (e.g. user navigates away).
     if (!ref.mounted) return;
 
     final snapshot = state.game;
@@ -86,14 +92,17 @@ class GameController extends _$GameController {
     final move = _strategy.nextMove(snapshot.board, cpuMark);
     _log.info('CPU move: index=$move', tag: _tag);
 
-    final next = playMove(state: snapshot, index: move, mark: cpuMark);
-
-    if (next is WonEntity) {
-      _log.info('Game over — winner: ${next.winner.name}', tag: _tag);
-    } else if (next is DrawEntity) {
-      _log.info('Game over — draw', tag: _tag);
+    final result = const PlayMove()(
+      PlayMoveParams(state: snapshot, index: move, mark: cpuMark),
+    );
+    switch (result) {
+      case Success(:final value):
+        if (value is WonEntity) _log.info('Game over — winner: ${value.winner.name}', tag: _tag);
+        if (value is DrawEntity) _log.info('Game over — draw', tag: _tag);
+        state = GameUiState(game: value);
+      case Error(:final failure):
+        _log.warning('Invalid CPU move at index=$move: ${failure.message}', tag: _tag);
+        state = state.copyWith(cpuThinking: false);
     }
-
-    state = GameUiState(game: next);
   }
 }

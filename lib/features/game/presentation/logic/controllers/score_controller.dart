@@ -26,9 +26,17 @@ class ScoreController extends _$ScoreController {
     };
   }
 
-  Future<void> recordWin() => _mutate((s) => recordOutcome(s, GameOutcome.win));
-  Future<void> recordLoss() => _mutate((s) => recordOutcome(s, GameOutcome.loss));
-  Future<void> recordDraw() => _mutate((s) => recordOutcome(s, GameOutcome.draw));
+  Future<void> recordWin() => _mutate(
+        (s) => const RecordOutcome()(RecordOutcomeParams(current: s, outcome: GameOutcome.win)).unwrap(),
+      );
+
+  Future<void> recordLoss() => _mutate(
+        (s) => const RecordOutcome()(RecordOutcomeParams(current: s, outcome: GameOutcome.loss)).unwrap(),
+      );
+
+  Future<void> recordDraw() => _mutate(
+        (s) => const RecordOutcome()(RecordOutcomeParams(current: s, outcome: GameOutcome.draw)).unwrap(),
+      );
 
   Future<void> reset() async {
     final previous = state.value;
@@ -38,7 +46,6 @@ class ScoreController extends _$ScoreController {
     if (result is! Success && previous != null) state = AsyncData(previous);
   }
 
-  // Applique une mutation locale à l'état du score, puis tente de la persister.
   Future<void> _mutate(ScoreEntity Function(ScoreEntity) update) async {
     final current = state.value;
     if (current == null) return;
