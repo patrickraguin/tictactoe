@@ -53,7 +53,7 @@ void main() {
                   child: const SizedBox(
                     width: 300,
                     height: 300,
-                    child: ColoredBox(color: Colors.red),
+                    child: ColoredBox(key: Key('tap-target'), color: Colors.red),
                   ),
                 ),
                 SizedBox(
@@ -69,7 +69,7 @@ void main() {
           ),
         ),
       );
-      await tester.tap(find.byType(ColoredBox));
+      await tester.tap(find.byKey(const Key('tap-target')));
       await tester.pump();
       expect(tapped, isTrue);
     });
