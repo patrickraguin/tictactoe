@@ -15,7 +15,8 @@ class SettingsPage extends ConsumerWidget {
     final l10n = context.l10n;
     final cs = Theme.of(context).colorScheme;
     final text = Theme.of(context).textTheme;
-    final currentLocale = ref.watch(localeControllerProvider).asData?.value;
+    final localeAsync = ref.watch(localeControllerProvider);
+    final currentLocale = localeAsync.asData?.value;
     final packageInfoAsync = ref.watch(packageInfoProvider);
 
     void setLocale(Locale? locale) =>
@@ -28,34 +29,53 @@ class SettingsPage extends ConsumerWidget {
           padding: const EdgeInsets.symmetric(vertical: 8),
           children: [
             _SectionHeader(icon: Icons.language_outlined, label: l10n.settingsLanguage),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Card(
-                clipBehavior: Clip.antiAlias,
-                child: RadioGroup<Locale?>(
-                  groupValue: currentLocale,
-                  onChanged: setLocale,
-                  child: Column(
-                    children: [
-                      RadioListTile<Locale?>(
-                        title: Text(l10n.settingsLanguageSystem),
-                        value: null,
-                      ),
-                      const Divider(indent: 16, endIndent: 16, height: 1),
-                      RadioListTile<Locale?>(
-                        title: Text(l10n.settingsLanguageFr),
-                        value: const Locale('fr'),
-                      ),
-                      const Divider(indent: 16, endIndent: 16, height: 1),
-                      RadioListTile<Locale?>(
-                        title: Text(l10n.settingsLanguageEn),
-                        value: const Locale('en'),
-                      ),
-                    ],
+            if (localeAsync.hasError)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Card(
+                  color: cs.errorContainer,
+                  child: ListTile(
+                    leading: Icon(Icons.error_outline, color: cs.error),
+                    title: Text(
+                      l10n.settingsLanguageLoadError,
+                      style: TextStyle(color: cs.onErrorContainer),
+                    ),
+                    trailing: TextButton(
+                      onPressed: () => ref.invalidate(localeControllerProvider),
+                      child: Text(l10n.retry),
+                    ),
+                  ),
+                ),
+              )
+            else
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Card(
+                  clipBehavior: Clip.antiAlias,
+                  child: RadioGroup<Locale?>(
+                    groupValue: currentLocale,
+                    onChanged: setLocale,
+                    child: Column(
+                      children: [
+                        RadioListTile<Locale?>(
+                          title: Text(l10n.settingsLanguageSystem),
+                          value: null,
+                        ),
+                        const Divider(indent: 16, endIndent: 16, height: 1),
+                        RadioListTile<Locale?>(
+                          title: Text(l10n.settingsLanguageFr),
+                          value: const Locale('fr'),
+                        ),
+                        const Divider(indent: 16, endIndent: 16, height: 1),
+                        RadioListTile<Locale?>(
+                          title: Text(l10n.settingsLanguageEn),
+                          value: const Locale('en'),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
             const SizedBox(height: 24),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),

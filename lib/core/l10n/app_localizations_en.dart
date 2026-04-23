@@ -156,4 +156,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String semanticsScoreSummary(int wins, int draws, int losses) {
     return '$wins wins, $draws draws, $losses losses';
   }
+
+  @override
+  String get settingsLanguageLoadError => 'Could not load language preference.';
+
+  @override
+  String get retry => 'Retry';
 }

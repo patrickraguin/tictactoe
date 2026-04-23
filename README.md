@@ -9,7 +9,7 @@ Application Tic-Tac-Toe Humain vs CPU construite avec une architecture Clean Arc
 | Architecture | Clean Architecture (domain / data / presentation), feature-first |
 | État | Riverpod 3 + `riverpod_generator` |
 | Modèles | Freezed 3 — sealed unions, immuabilité, `copyWith` |
-| Navigation | AutoRoute 10 — routes type-safe avec paramètres compilés |
+| Navigation | AutoRoute 11 — routes type-safe avec paramètres compilés |
 | Persistance | `shared_preferences` |
 | Internationalisation | `flutter_localizations` · Français + Anglais |
 | Infos app | `package_info_plus` |

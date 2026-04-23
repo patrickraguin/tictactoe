@@ -1,37 +1,46 @@
+import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../domain/entities/score_entity.dart';
 
 /// Source de données locale pour le score, basée sur [SharedPreferences].
 ///
-/// Encapsule les clés de stockage et fournit des méthodes de lecture synchrone
-/// et d'écriture/suppression asynchrone via [Future.wait] pour paralléliser les appels.
+/// Sérialise [ScoreEntity] en JSON dans une **seule clé** pour garantir
+/// l'atomicité : une coupure entre deux écritures ne peut pas produire un
+/// état incohérent (ex. victoires mises à jour, défaites non).
 class ScoreLocalDatasource {
   ScoreLocalDatasource(this._prefs);
 
   final SharedPreferences _prefs;
 
-  static const _winsKey = 'score.wins';
-  static const _lossesKey = 'score.losses';
-  static const _drawsKey = 'score.draws';
+  static const _scoreKey = 'score.v2';
 
-  // SharedPreferences est synchrone après la première initialisation (await getInstance).
-  // L'asymétrie read-sync / write-async est intentionnelle et garantie par le framework.
-  int readWins() => _prefs.getInt(_winsKey) ?? 0;
-  int readLosses() => _prefs.getInt(_lossesKey) ?? 0;
-  int readDraws() => _prefs.getInt(_drawsKey) ?? 0;
+  ScoreEntity read() {
+    final raw = _prefs.getString(_scoreKey);
+    if (raw == null) return ScoreEntity.zero();
+    try {
+      final map = jsonDecode(raw) as Map<String, dynamic>;
+      return ScoreEntity(
+        wins: map['wins'] as int? ?? 0,
+        losses: map['losses'] as int? ?? 0,
+        draws: map['draws'] as int? ?? 0,
+      );
+    } catch (_) {
+      return ScoreEntity.zero();
+    }
+  }
 
-  Future<void> write({required int wins, required int losses, required int draws}) async {
-    await Future.wait([
-      _prefs.setInt(_winsKey, wins),
-      _prefs.setInt(_lossesKey, losses),
-      _prefs.setInt(_drawsKey, draws),
-    ]);
+  Future<void> write(ScoreEntity score) async {
+    final json = jsonEncode({
+      'wins': score.wins,
+      'losses': score.losses,
+      'draws': score.draws,
+    });
+    await _prefs.setString(_scoreKey, json);
   }
 
   Future<void> clear() async {
-    await Future.wait([
-      _prefs.remove(_winsKey),
-      _prefs.remove(_lossesKey),
-      _prefs.remove(_drawsKey),
-    ]);
+    await _prefs.remove(_scoreKey);
   }
 }

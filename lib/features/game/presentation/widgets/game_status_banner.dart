@@ -64,7 +64,13 @@ class GameStatusBanner extends StatelessWidget {
             children: [
               Icon(icon, color: fgColor),
               const SizedBox(width: 8),
-              Text(message, style: text.titleLarge?.copyWith(color: fgColor)),
+              Flexible(
+                child: Text(
+                  message,
+                  style: text.titleLarge?.copyWith(color: fgColor),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
             ],
           ),
         ),

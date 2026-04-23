@@ -80,5 +80,7 @@
       "draws": { "type": "int" },
       "losses": { "type": "int" }
     }
-  }
+  },
+  "settingsLanguageLoadError": "Impossible de charger la préférence de langue.",
+  "retry": "Réessayer"
 }

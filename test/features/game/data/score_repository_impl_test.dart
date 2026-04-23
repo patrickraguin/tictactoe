@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tictactoe/core/result/result.dart';
@@ -24,9 +26,7 @@ void main() {
 
   test('reset clears persisted score', () async {
     SharedPreferences.setMockInitialValues({
-      'score.wins': 5,
-      'score.losses': 4,
-      'score.draws': 2,
+      'score.v2': jsonEncode({'wins': 5, 'losses': 4, 'draws': 2}),
     });
     final prefs = await SharedPreferences.getInstance();
     final repo = ScoreRepositoryImpl(ScoreLocalDatasource(prefs));
@@ -36,5 +36,22 @@ void main() {
 
     final loadResult = await repo.load();
     expect((loadResult as Success<ScoreEntity>).value, ScoreEntity.zero());
+  });
+
+  test('load returns zero score when no data is stored', () async {
+    final prefs = await SharedPreferences.getInstance();
+    final repo = ScoreRepositoryImpl(ScoreLocalDatasource(prefs));
+
+    final result = await repo.load();
+    expect((result as Success<ScoreEntity>).value, ScoreEntity.zero());
+  });
+
+  test('load returns zero score when stored JSON is corrupted', () async {
+    SharedPreferences.setMockInitialValues({'score.v2': 'not-valid-json'});
+    final prefs = await SharedPreferences.getInstance();
+    final repo = ScoreRepositoryImpl(ScoreLocalDatasource(prefs));
+
+    final result = await repo.load();
+    expect((result as Success<ScoreEntity>).value, ScoreEntity.zero());
   });
 }

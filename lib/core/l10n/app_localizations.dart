@@ -379,6 +379,18 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'{wins} victoires, {draws} nuls, {losses} défaites'**
   String semanticsScoreSummary(int wins, int draws, int losses);
+
+  /// No description provided for @settingsLanguageLoadError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible de charger la préférence de langue.'**
+  String get settingsLanguageLoadError;
+
+  /// No description provided for @retry.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réessayer'**
+  String get retry;
 }
 
 class _AppLocalizationsDelegate

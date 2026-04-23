@@ -80,5 +80,7 @@
       "draws": { "type": "int" },
       "losses": { "type": "int" }
     }
-  }
+  },
+  "settingsLanguageLoadError": "Could not load language preference.",
+  "retry": "Retry"
 }
