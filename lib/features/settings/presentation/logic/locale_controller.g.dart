@@ -10,7 +10,7 @@ part of 'locale_controller.dart';
 // ignore_for_file: type=lint, type=warning
 /// Contrôleur de la locale applicative (keepAlive).
 ///
-/// Charge la préférence de langue depuis [LocaleRepository] à l'initialisation.
+/// Charge la préférence de langue via [LoadLocale] à l'initialisation.
 /// `null` signifie « utiliser la locale système ».
 
 @ProviderFor(LocaleController)
@@ -18,13 +18,13 @@ final localeControllerProvider = LocaleControllerProvider._();
 
 /// Contrôleur de la locale applicative (keepAlive).
 ///
-/// Charge la préférence de langue depuis [LocaleRepository] à l'initialisation.
+/// Charge la préférence de langue via [LoadLocale] à l'initialisation.
 /// `null` signifie « utiliser la locale système ».
 final class LocaleControllerProvider
     extends $AsyncNotifierProvider<LocaleController, Locale?> {
   /// Contrôleur de la locale applicative (keepAlive).
   ///
-  /// Charge la préférence de langue depuis [LocaleRepository] à l'initialisation.
+  /// Charge la préférence de langue via [LoadLocale] à l'initialisation.
   /// `null` signifie « utiliser la locale système ».
   LocaleControllerProvider._()
     : super(
@@ -45,11 +45,11 @@ final class LocaleControllerProvider
   LocaleController create() => LocaleController();
 }
 
-String _$localeControllerHash() => r'c86444329844ffab40413ac2889a6da78db6f0b1';
+String _$localeControllerHash() => r'c113984ff2ed299d3c850649d53b3d13a4fb7c9b';
 
 /// Contrôleur de la locale applicative (keepAlive).
 ///
-/// Charge la préférence de langue depuis [LocaleRepository] à l'initialisation.
+/// Charge la préférence de langue via [LoadLocale] à l'initialisation.
 /// `null` signifie « utiliser la locale système ».
 
 abstract class _$LocaleController extends $AsyncNotifier<Locale?> {
