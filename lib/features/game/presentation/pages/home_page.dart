@@ -37,6 +37,8 @@ class HomePage extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const Spacer(),
+              const _HeroSection(),
+              const SizedBox(height: 28),
               Text(
                 l10n.homeTitle,
                 textAlign: TextAlign.center,
@@ -46,9 +48,11 @@ class HomePage extends ConsumerWidget {
               Text(
                 l10n.homeSubtitle,
                 textAlign: TextAlign.center,
-                style: text.bodyMedium,
+                style: text.bodyMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 28),
               const ScorePanel(),
               const Spacer(),
               FilledButton.icon(
@@ -94,5 +98,62 @@ class HomePage extends ConsumerWidget {
     if (confirmReset ?? false) {
       await ref.read(scoreControllerProvider.notifier).reset();
     }
+  }
+}
+
+class _HeroSection extends StatelessWidget {
+  const _HeroSection();
+
+  @override
+  Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    final text = Theme.of(context).textTheme;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        _MarkBadge('X', cs.primaryContainer, cs.primary),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Text(
+            'vs',
+            style: text.headlineMedium?.copyWith(
+              color: cs.onSurfaceVariant,
+              fontWeight: FontWeight.w300,
+            ),
+          ),
+        ),
+        _MarkBadge('O', cs.tertiaryContainer, cs.tertiary),
+      ],
+    );
+  }
+}
+
+class _MarkBadge extends StatelessWidget {
+  const _MarkBadge(this.mark, this.background, this.foreground);
+
+  final String mark;
+  final Color background;
+  final Color foreground;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 96,
+      height: 96,
+      decoration: BoxDecoration(
+        color: background,
+        borderRadius: BorderRadius.circular(24),
+      ),
+      alignment: Alignment.center,
+      child: Text(
+        mark,
+        style: TextStyle(
+          fontSize: 60,
+          fontWeight: FontWeight.w800,
+          color: foreground,
+          height: 1,
+        ),
+      ),
+    );
   }
 }

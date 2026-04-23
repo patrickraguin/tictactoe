@@ -28,58 +28,67 @@ class ConfigPage extends ConsumerWidget {
       appBar: AppBar(title: Text(l10n.configPageTitle)),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              _SectionLabel(l10n.configYourSymbol),
-              SegmentedButton<CellMarkEnum>(
-                segments: const [
-                  ButtonSegment(value: CellMarkEnum.x, label: Text('X')),
-                  ButtonSegment(value: CellMarkEnum.o, label: Text('O')),
-                ],
-                selected: {config.humanMark},
-                onSelectionChanged: (s) => notifier.setMark(s.first),
+              _SectionCard(
+                icon: Icons.tag,
+                label: l10n.configYourSymbol,
+                child: SegmentedButton<CellMarkEnum>(
+                  segments: const [
+                    ButtonSegment(value: CellMarkEnum.x, label: Text('X')),
+                    ButtonSegment(value: CellMarkEnum.o, label: Text('O')),
+                  ],
+                  selected: {config.humanMark},
+                  onSelectionChanged: (s) => notifier.setMark(s.first),
+                ),
               ),
-              const SizedBox(height: 24),
-              _SectionLabel(l10n.configWhoStarts),
-              SegmentedButton<TypePlayerEnum>(
-                segments: [
-                  ButtonSegment(
-                    value: TypePlayerEnum.human,
-                    label: Text(l10n.configFirstPlayerHuman),
-                  ),
-                  ButtonSegment(
-                    value: TypePlayerEnum.cpu,
-                    label: Text(l10n.configFirstPlayerCpu),
-                  ),
-                  ButtonSegment(
-                    value: TypePlayerEnum.random,
-                    label: Text(l10n.configFirstPlayerRandom),
-                  ),
-                ],
-                selected: {config.firstPlayer},
-                onSelectionChanged: (s) => notifier.setFirstPlayer(s.first),
+              const SizedBox(height: 12),
+              _SectionCard(
+                icon: Icons.person_outline,
+                label: l10n.configWhoStarts,
+                child: SegmentedButton<TypePlayerEnum>(
+                  segments: [
+                    ButtonSegment(
+                      value: TypePlayerEnum.human,
+                      label: Text(l10n.configFirstPlayerHuman),
+                    ),
+                    ButtonSegment(
+                      value: TypePlayerEnum.cpu,
+                      label: Text(l10n.configFirstPlayerCpu),
+                    ),
+                    ButtonSegment(
+                      value: TypePlayerEnum.random,
+                      label: Text(l10n.configFirstPlayerRandom),
+                    ),
+                  ],
+                  selected: {config.firstPlayer},
+                  onSelectionChanged: (s) => notifier.setFirstPlayer(s.first),
+                ),
               ),
-              const SizedBox(height: 24),
-              _SectionLabel(l10n.configDifficulty),
-              SegmentedButton<DifficultyEnum>(
-                segments: [
-                  ButtonSegment(
-                    value: DifficultyEnum.easy,
-                    label: Text(l10n.configDifficultyEasy),
-                  ),
-                  ButtonSegment(
-                    value: DifficultyEnum.medium,
-                    label: Text(l10n.configDifficultyMedium),
-                  ),
-                  ButtonSegment(
-                    value: DifficultyEnum.hard,
-                    label: Text(l10n.configDifficultyHard),
-                  ),
-                ],
-                selected: {config.difficulty},
-                onSelectionChanged: (s) => notifier.setDifficulty(s.first),
+              const SizedBox(height: 12),
+              _SectionCard(
+                icon: Icons.speed,
+                label: l10n.configDifficulty,
+                child: SegmentedButton<DifficultyEnum>(
+                  segments: [
+                    ButtonSegment(
+                      value: DifficultyEnum.easy,
+                      label: Text(l10n.configDifficultyEasy),
+                    ),
+                    ButtonSegment(
+                      value: DifficultyEnum.medium,
+                      label: Text(l10n.configDifficultyMedium),
+                    ),
+                    ButtonSegment(
+                      value: DifficultyEnum.hard,
+                      label: Text(l10n.configDifficultyHard),
+                    ),
+                  ],
+                  selected: {config.difficulty},
+                  onSelectionChanged: (s) => notifier.setDifficulty(s.first),
+                ),
               ),
               const Spacer(),
               FilledButton.icon(
@@ -101,14 +110,43 @@ class ConfigPage extends ConsumerWidget {
   }
 }
 
-/// Libellé de section stylisé (titleMedium) avec une marge basse fixe.
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel(this.text);
-  final String text;
+class _SectionCard extends StatelessWidget {
+  const _SectionCard({
+    required this.icon,
+    required this.label,
+    required this.child,
+  });
+
+  final IconData icon;
+  final String label;
+  final Widget child;
 
   @override
-  Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(bottom: 8),
-        child: Text(text, style: Theme.of(context).textTheme.titleMedium),
-      );
+  Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: [
+                Icon(icon, size: 18, color: cs.primary),
+                const SizedBox(width: 8),
+                Text(
+                  label,
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        color: cs.primary,
+                      ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            child,
+          ],
+        ),
+      ),
+    );
+  }
 }

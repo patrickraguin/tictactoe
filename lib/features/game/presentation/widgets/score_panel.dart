@@ -39,44 +39,86 @@ class ScorePanel extends ConsumerWidget {
           ),
         ],
       ),
-      data: (score) => Semantics(
-        label: l10n.semanticsScoreSummary(score.wins, score.draws, score.losses),
-        // Suppress individual _ScoreChunk texts to avoid redundant reading.
-        excludeSemantics: true,
-        child: Card(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _ScoreChunk(label: l10n.scoreWins, value: score.wins),
-                _ScoreChunk(label: l10n.scoreDraws, value: score.draws),
-                _ScoreChunk(label: l10n.scoreLosses, value: score.losses),
-              ],
-            ),
+      data: (score) {
+        final cs = Theme.of(context).colorScheme;
+        return Semantics(
+          label: l10n.semanticsScoreSummary(score.wins, score.draws, score.losses),
+          excludeSemantics: true,
+          child: Row(
+            children: [
+              Expanded(
+                child: _ScoreChunk(
+                  label: l10n.scoreWins,
+                  value: score.wins,
+                  valueColor: cs.primary,
+                  backgroundColor: cs.primaryContainer,
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: _ScoreChunk(
+                  label: l10n.scoreDraws,
+                  value: score.draws,
+                  valueColor: cs.onSurfaceVariant,
+                  backgroundColor: cs.surfaceContainerHighest,
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: _ScoreChunk(
+                  label: l10n.scoreLosses,
+                  value: score.losses,
+                  valueColor: cs.error,
+                  backgroundColor: cs.errorContainer,
+                ),
+              ),
+            ],
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
 
-/// Colonne affichant une valeur numérique et son libellé (ex. "3 Victoires").
 class _ScoreChunk extends StatelessWidget {
-  const _ScoreChunk({required this.label, required this.value});
+  const _ScoreChunk({
+    required this.label,
+    required this.value,
+    required this.valueColor,
+    required this.backgroundColor,
+  });
 
   final String label;
   final int value;
+  final Color valueColor;
+  final Color backgroundColor;
 
   @override
   Widget build(BuildContext context) {
     final text = Theme.of(context).textTheme;
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text('$value', style: text.headlineSmall),
-        Text(label, style: text.labelMedium),
-      ],
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 14),
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            '$value',
+            style: text.headlineSmall?.copyWith(
+              color: valueColor,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 2),
+          Text(
+            label,
+            style: text.labelMedium?.copyWith(color: valueColor),
+          ),
+        ],
+      ),
     );
   }
 }
