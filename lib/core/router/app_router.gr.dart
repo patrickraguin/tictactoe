@@ -30,12 +30,12 @@ class ConfigRoute extends PageRouteInfo<void> {
 /// [GamePage]
 class GameRoute extends PageRouteInfo<GameRouteArgs> {
   GameRoute({
-    Key? key,
     required GameConfigEntity config,
+    Key? key,
     List<PageRouteInfo>? children,
   }) : super(
          GameRoute.name,
-         args: GameRouteArgs(key: key, config: config),
+         args: GameRouteArgs(config: config, key: key),
          initialChildren: children,
        );
 
@@ -45,32 +45,32 @@ class GameRoute extends PageRouteInfo<GameRouteArgs> {
     name,
     builder: (data) {
       final args = data.argsAs<GameRouteArgs>();
-      return GamePage(key: args.key, config: args.config);
+      return GamePage(config: args.config, key: args.key);
     },
   );
 }
 
 class GameRouteArgs {
-  const GameRouteArgs({this.key, required this.config});
-
-  final Key? key;
+  const GameRouteArgs({required this.config, this.key});
 
   final GameConfigEntity config;
 
+  final Key? key;
+
   @override
   String toString() {
-    return 'GameRouteArgs{key: $key, config: $config}';
+    return 'GameRouteArgs{config: $config, key: $key}';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other is! GameRouteArgs) return false;
-    return key == other.key && config == other.config;
+    return config == other.config && key == other.key;
   }
 
   @override
-  int get hashCode => key.hashCode ^ config.hashCode;
+  int get hashCode => config.hashCode ^ key.hashCode;
 }
 
 /// generated route for
