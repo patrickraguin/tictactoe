@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/l10n_ext.dart';
+import 'package:tictactoe/core/l10n_ext.dart';
 
 /// Boutons d'action affichés à la fin d'une partie.
 ///

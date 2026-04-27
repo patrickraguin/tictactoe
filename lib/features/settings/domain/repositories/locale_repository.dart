@@ -1,5 +1,5 @@
-import '../../../../core/result/result.dart';
-import '../entities/app_locale.dart';
+import 'package:tictactoe/core/result/result.dart';
+import 'package:tictactoe/features/settings/domain/entities/app_locale.dart';
 
 /// Contrat abstrait pour la persistance de la préférence de langue.
 ///

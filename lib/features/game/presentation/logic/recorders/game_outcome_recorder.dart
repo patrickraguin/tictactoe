@@ -1,11 +1,11 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../../../core/logging/logger_provider.dart';
-import '../../../domain/entities/game_config_entity.dart';
-import '../../../domain/entities/game_state_entity.dart';
-import '../controllers/game_controller.dart';
-import '../controllers/score_controller.dart';
-import '../game_ui_state.dart';
+import 'package:tictactoe/core/logging/logger_provider.dart';
+import 'package:tictactoe/features/game/domain/entities/game_config_entity.dart';
+import 'package:tictactoe/features/game/domain/entities/game_state_entity.dart';
+import 'package:tictactoe/features/game/presentation/logic/controllers/game_controller.dart';
+import 'package:tictactoe/features/game/presentation/logic/controllers/score_controller.dart';
+import 'package:tictactoe/features/game/presentation/logic/game_ui_state.dart';
 
 part 'game_outcome_recorder.g.dart';
 

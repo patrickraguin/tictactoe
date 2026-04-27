@@ -1,7 +1,7 @@
-import '../../../../core/domain/use_case.dart';
-import '../../../../core/result/result.dart';
-import '../entities/app_locale.dart';
-import '../repositories/locale_repository.dart';
+import 'package:tictactoe/core/domain/use_case.dart';
+import 'package:tictactoe/core/result/result.dart';
+import 'package:tictactoe/features/settings/domain/entities/app_locale.dart';
+import 'package:tictactoe/features/settings/domain/repositories/locale_repository.dart';
 
 /// Persiste la préférence de langue via le [LocaleRepository].
 class SetLocale implements AsyncUseCase<AppLocale, void> {

@@ -1,11 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../features/game/domain/entities/game_config_entity.dart';
-import '../../features/game/presentation/pages/config_page.dart';
-import '../../features/game/presentation/pages/game_page.dart';
-import '../../features/game/presentation/pages/home_page.dart';
-import '../../features/settings/presentation/pages/settings_page.dart';
+import 'package:tictactoe/features/game/domain/entities/game_config_entity.dart';
+import 'package:tictactoe/features/game/presentation/pages/config_page.dart';
+import 'package:tictactoe/features/game/presentation/pages/game_page.dart';
+import 'package:tictactoe/features/game/presentation/pages/home_page.dart';
+import 'package:tictactoe/features/settings/presentation/pages/settings_page.dart';
 
 part 'app_router.gr.dart';
 

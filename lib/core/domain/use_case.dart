@@ -1,4 +1,4 @@
-import '../result/result.dart';
+import 'package:tictactoe/core/result/result.dart';
 
 /// Contrat de base pour tous les use cases synchrones.
 ///

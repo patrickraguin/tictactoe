@@ -1,16 +1,16 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../../../core/logging/app_logger.dart';
-import '../../../../../core/logging/logger_provider.dart';
-import '../../../../../core/result/result.dart';
-import '../../../domain/ai/ai_strategy.dart';
-import '../../../domain/entities/board_entity.dart';
-import '../../../domain/entities/game_config_entity.dart';
-import '../../../domain/entities/game_state_entity.dart';
-import '../../../domain/usecases/play_move.dart';
-import '../../../domain/usecases/resolve_first_player.dart';
-import '../game_ui_state.dart';
-import '../providers/ai_strategy_provider.dart';
+import 'package:tictactoe/core/logging/app_logger.dart';
+import 'package:tictactoe/core/logging/logger_provider.dart';
+import 'package:tictactoe/core/result/result.dart';
+import 'package:tictactoe/features/game/domain/ai/ai_strategy.dart';
+import 'package:tictactoe/features/game/domain/entities/board_entity.dart';
+import 'package:tictactoe/features/game/domain/entities/game_config_entity.dart';
+import 'package:tictactoe/features/game/domain/entities/game_state_entity.dart';
+import 'package:tictactoe/features/game/domain/usecases/play_move.dart';
+import 'package:tictactoe/features/game/domain/usecases/resolve_first_player.dart';
+import 'package:tictactoe/features/game/presentation/logic/game_ui_state.dart';
+import 'package:tictactoe/features/game/presentation/logic/providers/ai_strategy_provider.dart';
 
 part 'game_controller.g.dart';
 

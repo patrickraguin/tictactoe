@@ -1,9 +1,9 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../../../core/result/result.dart';
-import '../../../domain/entities/score_entity.dart';
-import '../../../domain/usecases/record_outcome.dart';
-import '../providers/score_providers.dart';
+import 'package:tictactoe/core/result/result.dart';
+import 'package:tictactoe/features/game/domain/entities/score_entity.dart';
+import 'package:tictactoe/features/game/domain/usecases/record_outcome.dart';
+import 'package:tictactoe/features/game/presentation/logic/providers/score_providers.dart';
 
 part 'score_controller.g.dart';
 

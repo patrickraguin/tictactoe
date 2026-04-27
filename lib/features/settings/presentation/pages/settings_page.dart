@@ -2,9 +2,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/l10n_ext.dart';
-import '../../../../core/persistence/package_info_provider.dart';
-import '../logic/locale_controller.dart';
+import 'package:tictactoe/core/l10n_ext.dart';
+import 'package:tictactoe/core/persistence/package_info_provider.dart';
+import 'package:tictactoe/features/settings/presentation/logic/locale_controller.dart';
 
 @RoutePage()
 class SettingsPage extends ConsumerWidget {

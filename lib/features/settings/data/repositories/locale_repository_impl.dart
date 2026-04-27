@@ -1,8 +1,8 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../../core/result/result.dart';
-import '../../domain/entities/app_locale.dart';
-import '../../domain/repositories/locale_repository.dart';
+import 'package:tictactoe/core/result/result.dart';
+import 'package:tictactoe/features/settings/domain/entities/app_locale.dart';
+import 'package:tictactoe/features/settings/domain/repositories/locale_repository.dart';
 
 /// Implémentation de [LocaleRepository] via [SharedPreferences].
 class LocaleRepositoryImpl implements LocaleRepository {

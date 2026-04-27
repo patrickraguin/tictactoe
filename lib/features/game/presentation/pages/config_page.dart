@@ -2,12 +2,12 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/l10n_ext.dart';
-import '../../../../core/router/app_router.dart';
-import '../../domain/entities/cell_mark_enum.dart';
-import '../../domain/entities/difficulty_enum.dart';
-import '../../domain/entities/type_player_enum.dart';
-import '../logic/config_notifier.dart';
+import 'package:tictactoe/core/l10n_ext.dart';
+import 'package:tictactoe/core/router/app_router.dart';
+import 'package:tictactoe/features/game/domain/entities/cell_mark_enum.dart';
+import 'package:tictactoe/features/game/domain/entities/difficulty_enum.dart';
+import 'package:tictactoe/features/game/domain/entities/type_player_enum.dart';
+import 'package:tictactoe/features/game/presentation/logic/config_notifier.dart';
 
 /// Page de configuration d'une partie : choix du symbole, du premier joueur
 /// et du niveau de difficulté avant de lancer la partie.

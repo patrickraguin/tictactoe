@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'board_entity.dart';
-import 'cell_mark_enum.dart';
+import 'package:tictactoe/features/game/domain/entities/board_entity.dart';
+import 'package:tictactoe/features/game/domain/entities/cell_mark_enum.dart';
 
 part 'game_state_entity.freezed.dart';
 

@@ -1,6 +1,6 @@
-import '../entities/board_entity.dart';
-import '../entities/cell_mark_enum.dart';
-import 'ai_strategy.dart';
+import 'package:tictactoe/features/game/domain/entities/board_entity.dart';
+import 'package:tictactoe/features/game/domain/entities/cell_mark_enum.dart';
+import 'package:tictactoe/features/game/domain/ai/ai_strategy.dart';
 
 /// Stratégie IA de niveau difficile : algorithme minimax avec élagage alpha-bêta.
 ///

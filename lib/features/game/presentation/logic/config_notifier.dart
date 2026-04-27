@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../domain/entities/cell_mark_enum.dart';
-import '../../domain/entities/difficulty_enum.dart';
-import '../../domain/entities/game_config_entity.dart';
-import '../../domain/entities/type_player_enum.dart';
+import 'package:tictactoe/features/game/domain/entities/cell_mark_enum.dart';
+import 'package:tictactoe/features/game/domain/entities/difficulty_enum.dart';
+import 'package:tictactoe/features/game/domain/entities/game_config_entity.dart';
+import 'package:tictactoe/features/game/domain/entities/type_player_enum.dart';
 
 /// Provider auto-dispose gérant la configuration éphémère d'une partie.
 ///

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/l10n_ext.dart';
-import '../../domain/entities/board_entity.dart';
-import '../../domain/entities/cell_mark_enum.dart';
-import '../../domain/entities/game_state_entity.dart';
-import 'cell_widget.dart';
-import 'winning_line_overlay.dart';
+import 'package:tictactoe/core/l10n_ext.dart';
+import 'package:tictactoe/features/game/domain/entities/board_entity.dart';
+import 'package:tictactoe/features/game/domain/entities/cell_mark_enum.dart';
+import 'package:tictactoe/features/game/domain/entities/game_state_entity.dart';
+import 'package:tictactoe/features/game/presentation/widgets/cell_widget.dart';
+import 'package:tictactoe/features/game/presentation/widgets/winning_line_overlay.dart';
 
 /// Widget affichant la grille de jeu 3×3.
 ///

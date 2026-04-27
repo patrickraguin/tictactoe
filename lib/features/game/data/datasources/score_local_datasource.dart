@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../domain/entities/score_entity.dart';
+import 'package:tictactoe/features/game/domain/entities/score_entity.dart';
 
 /// Source de données locale pour le score, basée sur [SharedPreferences].
 ///

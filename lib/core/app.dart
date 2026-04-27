@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'l10n/app_localizations.dart';
-import '../features/settings/presentation/logic/locale_controller.dart';
-import 'router/app_router.dart';
-import 'theme/app_theme.dart';
+import 'package:tictactoe/core/l10n/app_localizations.dart';
+import 'package:tictactoe/features/settings/presentation/logic/locale_controller.dart';
+import 'package:tictactoe/core/router/app_router.dart';
+import 'package:tictactoe/core/theme/app_theme.dart';
 
 /// Point d'entrée du widget Flutter : configure [MaterialApp.router] avec
 /// le thème, la localisation (FR/EN), la locale active et le routeur [AppRouter].

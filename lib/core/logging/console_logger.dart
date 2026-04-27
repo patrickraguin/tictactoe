@@ -2,7 +2,7 @@ import 'dart:developer' as dev;
 
 import 'package:flutter/foundation.dart';
 
-import 'app_logger.dart';
+import 'package:tictactoe/core/logging/app_logger.dart';
 
 /// Implémentation console de [AppLogger] basée sur [dart:developer.log].
 ///

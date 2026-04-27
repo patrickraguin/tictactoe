@@ -1,11 +1,11 @@
 import 'package:flutter/widgets.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../../core/result/result.dart';
-import '../../domain/entities/app_locale.dart';
-import '../../domain/usecases/load_locale.dart';
-import '../../domain/usecases/set_locale.dart';
-import 'locale_repository_provider.dart';
+import 'package:tictactoe/core/result/result.dart';
+import 'package:tictactoe/features/settings/domain/entities/app_locale.dart';
+import 'package:tictactoe/features/settings/domain/usecases/load_locale.dart';
+import 'package:tictactoe/features/settings/domain/usecases/set_locale.dart';
+import 'package:tictactoe/features/settings/presentation/logic/locale_repository_provider.dart';
 
 part 'locale_controller.g.dart';
 

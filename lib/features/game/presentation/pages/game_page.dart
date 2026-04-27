@@ -2,14 +2,14 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/l10n_ext.dart';
-import '../logic/controllers/game_controller.dart';
-import '../logic/recorders/game_outcome_recorder.dart';
-import '../../domain/entities/game_config_entity.dart';
-import '../widgets/board_widget.dart';
-import '../widgets/game_end_actions.dart';
-import '../widgets/game_status_banner.dart';
-import '../widgets/score_panel.dart';
+import 'package:tictactoe/core/l10n_ext.dart';
+import 'package:tictactoe/features/game/presentation/logic/controllers/game_controller.dart';
+import 'package:tictactoe/features/game/presentation/logic/recorders/game_outcome_recorder.dart';
+import 'package:tictactoe/features/game/domain/entities/game_config_entity.dart';
+import 'package:tictactoe/features/game/presentation/widgets/board_widget.dart';
+import 'package:tictactoe/features/game/presentation/widgets/game_end_actions.dart';
+import 'package:tictactoe/features/game/presentation/widgets/game_status_banner.dart';
+import 'package:tictactoe/features/game/presentation/widgets/score_panel.dart';
 
 /// Page principale de jeu : orchestre le plateau, le statut de la partie
 /// et le panneau de score. Écoute [GameController] et [GameOutcomeRecorder].

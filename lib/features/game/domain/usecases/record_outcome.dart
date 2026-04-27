@@ -1,6 +1,6 @@
-import '../../../../core/domain/use_case.dart';
-import '../../../../core/result/result.dart';
-import '../entities/score_entity.dart';
+import 'package:tictactoe/core/domain/use_case.dart';
+import 'package:tictactoe/core/result/result.dart';
+import 'package:tictactoe/features/game/domain/entities/score_entity.dart';
 
 /// Issue possible d'une partie.
 enum GameOutcome { win, loss, draw }

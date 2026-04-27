@@ -1,6 +1,6 @@
 import 'package:meta/meta.dart';
 
-import 'cell_mark_enum.dart';
+import 'package:tictactoe/features/game/domain/entities/cell_mark_enum.dart';
 
 /// Plateau de jeu immutable représentant la grille 3×3.
 ///

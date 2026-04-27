@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/l10n_ext.dart';
-import '../logic/controllers/score_controller.dart';
+import 'package:tictactoe/core/l10n_ext.dart';
+import 'package:tictactoe/features/game/presentation/logic/controllers/score_controller.dart';
 
 /// Panneau affichant le score cumulé (victoires, nuls, défaites).
 ///

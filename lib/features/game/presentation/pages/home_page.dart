@@ -2,10 +2,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/l10n_ext.dart';
-import '../../../../core/router/app_router.dart';
-import '../logic/controllers/score_controller.dart';
-import '../widgets/score_panel.dart';
+import 'package:tictactoe/core/l10n_ext.dart';
+import 'package:tictactoe/core/router/app_router.dart';
+import 'package:tictactoe/features/game/presentation/logic/controllers/score_controller.dart';
+import 'package:tictactoe/features/game/presentation/widgets/score_panel.dart';
 
 /// Page d'accueil : affiche le titre, le score cumulé et les actions principales.
 ///

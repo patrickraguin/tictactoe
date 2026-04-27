@@ -1,8 +1,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'cell_mark_enum.dart';
-import 'difficulty_enum.dart';
-import 'type_player_enum.dart';
+import 'package:tictactoe/features/game/domain/entities/cell_mark_enum.dart';
+import 'package:tictactoe/features/game/domain/entities/difficulty_enum.dart';
+import 'package:tictactoe/features/game/domain/entities/type_player_enum.dart';
 
 part 'game_config_entity.freezed.dart';
 

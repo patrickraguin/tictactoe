@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../logging/app_logger.dart';
+import 'package:tictactoe/core/logging/app_logger.dart';
 
 /// Observateur Riverpod centralisant la gestion des erreurs et le logging
 /// des transitions d'état de tous les providers.

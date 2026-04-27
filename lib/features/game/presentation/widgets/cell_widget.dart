@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../domain/entities/cell_mark_enum.dart';
+import 'package:tictactoe/features/game/domain/entities/cell_mark_enum.dart';
 
 /// Widget représentant une cellule individuelle du plateau.
 ///

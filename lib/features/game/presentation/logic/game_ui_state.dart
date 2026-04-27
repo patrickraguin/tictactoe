@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../domain/entities/game_state_entity.dart';
+import 'package:tictactoe/features/game/domain/entities/game_state_entity.dart';
 
 part 'game_ui_state.freezed.dart';
 

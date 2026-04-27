@@ -1,7 +1,7 @@
-import '../../../../core/result/result.dart';
-import '../../domain/entities/score_entity.dart';
-import '../../domain/repositories/score_repository.dart';
-import '../datasources/score_local_datasource.dart';
+import 'package:tictactoe/core/result/result.dart';
+import 'package:tictactoe/features/game/domain/entities/score_entity.dart';
+import 'package:tictactoe/features/game/domain/repositories/score_repository.dart';
+import 'package:tictactoe/features/game/data/datasources/score_local_datasource.dart';
 
 /// Implémentation concrète de [ScoreRepository] utilisant [ScoreLocalDatasource].
 ///

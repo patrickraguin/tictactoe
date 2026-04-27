@@ -1,8 +1,8 @@
-import '../../../../core/domain/use_case.dart';
-import '../../../../core/result/result.dart';
-import '../entities/board_entity.dart';
-import '../entities/cell_mark_enum.dart';
-import '../entities/game_state_entity.dart';
+import 'package:tictactoe/core/domain/use_case.dart';
+import 'package:tictactoe/core/result/result.dart';
+import 'package:tictactoe/features/game/domain/entities/board_entity.dart';
+import 'package:tictactoe/features/game/domain/entities/cell_mark_enum.dart';
+import 'package:tictactoe/features/game/domain/entities/game_state_entity.dart';
 
 class PlayMoveParams {
   const PlayMoveParams({

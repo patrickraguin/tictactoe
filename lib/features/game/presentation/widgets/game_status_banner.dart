@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/l10n_ext.dart';
-import '../../domain/entities/game_state_entity.dart';
+import 'package:tictactoe/core/l10n_ext.dart';
+import 'package:tictactoe/features/game/domain/entities/game_state_entity.dart';
 
 /// Bandeau de statut animé indiquant le tour actuel ou le résultat de la partie.
 ///

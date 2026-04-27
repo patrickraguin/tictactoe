@@ -1,10 +1,10 @@
 import 'dart:math';
 
-import '../../../../core/domain/use_case.dart';
-import '../../../../core/result/result.dart';
-import '../entities/cell_mark_enum.dart';
-import '../entities/game_config_entity.dart';
-import '../entities/type_player_enum.dart';
+import 'package:tictactoe/core/domain/use_case.dart';
+import 'package:tictactoe/core/result/result.dart';
+import 'package:tictactoe/features/game/domain/entities/cell_mark_enum.dart';
+import 'package:tictactoe/features/game/domain/entities/game_config_entity.dart';
+import 'package:tictactoe/features/game/domain/entities/type_player_enum.dart';
 
 /// Détermine le symbole ([CellMarkEnum]) qui joue en premier selon la [GameConfigEntity].
 ///

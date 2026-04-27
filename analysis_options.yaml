@@ -20,3 +20,4 @@ linter:
     prefer_single_quotes: true
     avoid_dynamic_calls: true
     unawaited_futures: true
+    always_use_package_imports: true

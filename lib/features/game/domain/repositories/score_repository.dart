@@ -1,5 +1,5 @@
-import '../../../../core/result/result.dart';
-import '../entities/score_entity.dart';
+import 'package:tictactoe/core/result/result.dart';
+import 'package:tictactoe/features/game/domain/entities/score_entity.dart';
 
 /// Contrat abstrait pour la persistance du score.
 ///

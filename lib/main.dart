@@ -3,12 +3,12 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'core/app.dart';
-import 'core/error/app_provider_observer.dart';
-import 'core/logging/app_logger.dart';
-import 'core/logging/console_logger.dart';
-import 'core/logging/logger_provider.dart';
-import 'core/persistence/shared_prefs_provider.dart';
+import 'package:tictactoe/core/app.dart';
+import 'package:tictactoe/core/error/app_provider_observer.dart';
+import 'package:tictactoe/core/logging/app_logger.dart';
+import 'package:tictactoe/core/logging/console_logger.dart';
+import 'package:tictactoe/core/logging/logger_provider.dart';
+import 'package:tictactoe/core/persistence/shared_prefs_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
