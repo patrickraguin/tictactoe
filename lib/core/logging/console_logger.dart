@@ -22,7 +22,7 @@ class ConsoleLogger implements AppLogger {
   @override
   void debug(String message, {String? tag}) {
     if (!_shouldLog(LogLevel.debug)) return;
-    dev.log(message, name: tag ?? '', level: 0);
+    dev.log(message, name: tag ?? '');
   }
 
   @override

@@ -12,8 +12,8 @@ import 'package:tictactoe/features/game/domain/entities/type_player_enum.dart';
 import 'package:tictactoe/features/game/presentation/logic/controllers/game_controller.dart';
 import 'package:tictactoe/features/game/presentation/logic/controllers/score_controller.dart';
 import 'package:tictactoe/features/game/presentation/logic/game_ui_state.dart';
-import 'package:tictactoe/features/game/presentation/logic/recorders/game_outcome_recorder.dart';
 import 'package:tictactoe/features/game/presentation/logic/providers/score_providers.dart';
+import 'package:tictactoe/features/game/presentation/logic/recorders/game_outcome_recorder.dart';
 
 import '../../../../../helpers/mock_score_repository.dart';
 import '../../../../../helpers/provider_helpers.dart';
@@ -72,12 +72,12 @@ void main() {
   setUp(() {
     mockRepo = MockScoreRepository();
     when(() => mockRepo.load()).thenAnswer((_) async => Success(ScoreEntity.zero()));
-    when(() => mockRepo.save(any())).thenAnswer((_) async => Success(null));
-    when(() => mockRepo.reset()).thenAnswer((_) async => Success(null));
+    when(() => mockRepo.save(any())).thenAnswer((_) async => const Success(null));
+    when(() => mockRepo.reset()).thenAnswer((_) async => const Success(null));
   });
 
-  makeRecorderContainer() => makeContainer(overrides: [
-        gameControllerProvider.overrideWith(() => _FakeGameController()),
+  ProviderContainer makeRecorderContainer() => makeContainer(overrides: [
+        gameControllerProvider.overrideWith(_FakeGameController.new),
         scoreRepositoryProvider.overrideWithValue(mockRepo),
       ]);
 

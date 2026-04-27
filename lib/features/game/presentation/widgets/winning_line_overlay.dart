@@ -7,9 +7,7 @@ import 'package:flutter/material.dart';
 /// (0 → 100 % en 400 ms). N'intercepte aucun événement pointeur ([IgnorePointer]).
 class WinningLineOverlay extends StatelessWidget {
   const WinningLineOverlay({
-    super.key,
-    required this.line,
-    required this.color,
+    required this.line, required this.color, super.key,
   });
 
   final List<int> line;

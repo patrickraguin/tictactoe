@@ -9,28 +9,28 @@ ScoreEntity _call(ScoreEntity current, GameOutcome outcome) =>
     _recordOutcome(RecordOutcomeParams(current: current, outcome: outcome)).unwrap();
 
 void main() {
-  const zero = ScoreEntity(wins: 0, losses: 0, draws: 0);
+  const zero = ScoreEntity();
   const base = ScoreEntity(wins: 1, losses: 2, draws: 3);
 
   group('RecordOutcome', () {
     test('win increments wins only', () {
       expect(
         _call(zero, GameOutcome.win),
-        const ScoreEntity(wins: 1, losses: 0, draws: 0),
+        const ScoreEntity(wins: 1),
       );
     });
 
     test('loss increments losses only', () {
       expect(
         _call(zero, GameOutcome.loss),
-        const ScoreEntity(wins: 0, losses: 1, draws: 0),
+        const ScoreEntity(losses: 1),
       );
     });
 
     test('draw increments draws only', () {
       expect(
         _call(zero, GameOutcome.draw),
-        const ScoreEntity(wins: 0, losses: 0, draws: 1),
+        const ScoreEntity(draws: 1),
       );
     });
 
@@ -53,7 +53,7 @@ void main() {
 
     test('always returns Success', () {
       expect(
-        _recordOutcome(RecordOutcomeParams(current: zero, outcome: GameOutcome.win)),
+        _recordOutcome(const RecordOutcomeParams(current: zero, outcome: GameOutcome.win)),
         isA<Success<ScoreEntity>>(),
       );
     });

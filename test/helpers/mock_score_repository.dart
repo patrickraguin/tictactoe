@@ -9,5 +9,5 @@ class MockScoreRepository extends Mock implements ScoreRepository {}
 /// avec [any()] sur des arguments de type [ScoreEntity].
 void registerScoreFallbacks() {
   registerFallbackValue(ScoreEntity.zero());
-  registerFallbackValue(const Success(ScoreEntity(wins: 0, losses: 0, draws: 0)));
+  registerFallbackValue(const Success(ScoreEntity()));
 }

@@ -10,10 +10,7 @@ import 'package:tictactoe/features/game/domain/entities/cell_mark_enum.dart';
 /// La cellule est mise en surbrillance si elle fait partie de la ligne gagnante.
 class CellWidget extends StatelessWidget {
   const CellWidget({
-    super.key,
-    required this.mark,
-    required this.onTap,
-    required this.highlighted,
+    required this.mark, required this.onTap, required this.highlighted, super.key,
   });
 
   final CellMarkEnum mark;
@@ -48,7 +45,6 @@ class CellWidget extends StatelessWidget {
               ),
               child: mark.isPlayed
                   ? FittedBox(
-                      fit: BoxFit.contain,
                       child: Text(
                         mark == CellMarkEnum.x ? 'X' : 'O',
                         key: ValueKey(mark),

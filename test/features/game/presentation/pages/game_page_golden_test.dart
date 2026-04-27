@@ -92,7 +92,7 @@ final _humanWonUiState = GameUiState(
 
 final _drawUiState = GameUiState(
   game: GameStateEntity.draw(
-    board: BoardEntity([
+    board: BoardEntity(const [
       CellMarkEnum.x, CellMarkEnum.o, CellMarkEnum.x, //
       CellMarkEnum.x, CellMarkEnum.o, CellMarkEnum.o, //
       CellMarkEnum.o, CellMarkEnum.x, CellMarkEnum.x, //
@@ -107,13 +107,13 @@ Widget _buildApp(GameUiState uiState, {ThemeData? theme}) => ProviderScope(
       overrides: [
         gameControllerProvider(_config).overrideWith(() => _FixedGameController(uiState)),
         scoreControllerProvider.overrideWith(() => _FakeScoreController(_score)),
-        gameOutcomeRecorderProvider(_config).overrideWith(() => _NoOpGameOutcomeRecorder()),
+        gameOutcomeRecorderProvider(_config).overrideWith(_NoOpGameOutcomeRecorder.new),
       ],
       child: MaterialApp(
         theme: theme ?? buildLightTheme(),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        home: GamePage(config: _config),
+        home: const GamePage(config: _config),
       ),
     );
 

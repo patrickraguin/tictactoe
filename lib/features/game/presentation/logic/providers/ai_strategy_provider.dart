@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart';
 
 import 'package:tictactoe/features/game/domain/ai/ai_strategy.dart';
 import 'package:tictactoe/features/game/domain/entities/difficulty_enum.dart';
@@ -7,7 +8,7 @@ import 'package:tictactoe/features/game/domain/entities/difficulty_enum.dart';
 ///
 /// Provider non code-gen intentionnel : simple délégation sans état,
 /// `overrideWith` disponible pour l'injection de fakes en test.
-final aiStrategyProvider =
+final ProviderFamily<AiStrategy, DifficultyEnum> aiStrategyProvider =
     Provider.autoDispose.family<AiStrategy, DifficultyEnum>(
   (ref, difficulty) => AiStrategy.fromDifficulty(difficulty),
 );

@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:riverpod/src/framework.dart';
 import 'package:tictactoe/core/result/result.dart';
 import 'package:tictactoe/features/game/domain/entities/score_entity.dart';
 import 'package:tictactoe/features/game/presentation/logic/controllers/score_controller.dart';
@@ -16,11 +17,11 @@ void main() {
   setUp(() {
     mockRepo = MockScoreRepository();
     when(() => mockRepo.load()).thenAnswer((_) async => Success(ScoreEntity.zero()));
-    when(() => mockRepo.save(any())).thenAnswer((_) async => Success(null));
-    when(() => mockRepo.reset()).thenAnswer((_) async => Success(null));
+    when(() => mockRepo.save(any())).thenAnswer((_) async => const Success(null));
+    when(() => mockRepo.reset()).thenAnswer((_) async => const Success(null));
   });
 
-  makeScoreContainer() => makeContainer(overrides: [
+  ProviderContainer makeScoreContainer() => makeContainer(overrides: [
         scoreRepositoryProvider.overrideWithValue(mockRepo),
       ]);
 
@@ -50,7 +51,7 @@ void main() {
     await container.read(scoreControllerProvider.future);
     await container.read(scoreControllerProvider.notifier).recordWin();
 
-    verify(() => mockRepo.save(const ScoreEntity(wins: 1, losses: 0, draws: 0))).called(1);
+    verify(() => mockRepo.save(const ScoreEntity(wins: 1))).called(1);
   });
 
   test('recordLoss increments losses', () async {

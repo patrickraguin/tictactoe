@@ -31,7 +31,7 @@ class PlayMove implements UseCase<PlayMoveParams, GameStateEntity> {
       return const Error(InvalidMoveFailure('la partie est déjà terminée'));
     }
     if (state.turn != params.mark) {
-      return const Error(InvalidMoveFailure('ce n\'est pas votre tour'));
+      return const Error(InvalidMoveFailure("ce n'est pas votre tour"));
     }
     if (state.board.cellAt(params.index).isPlayed) {
       return const Error(InvalidMoveFailure('la case est déjà occupée'));

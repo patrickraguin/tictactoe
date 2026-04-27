@@ -12,14 +12,14 @@ void main() {
   group('WinningLineOverlay', () {
     testWidgets('renders without error for a valid diagonal line', (tester) async {
       await tester.pumpWidget(
-        _wrap(WinningLineOverlay(line: const [0, 4, 8], color: Colors.blue)),
+        _wrap(const WinningLineOverlay(line: [0, 4, 8], color: Colors.blue)),
       );
       expect(tester.takeException(), isNull);
     });
 
     testWidgets('renders without error for a horizontal line', (tester) async {
       await tester.pumpWidget(
-        _wrap(WinningLineOverlay(line: const [0, 1, 2], color: Colors.red)),
+        _wrap(const WinningLineOverlay(line: [0, 1, 2], color: Colors.red)),
       );
       expect(tester.takeException(), isNull);
     });
@@ -27,7 +27,7 @@ void main() {
     testWidgets('renders without error when line has fewer than 3 elements',
         (tester) async {
       await tester.pumpWidget(
-        _wrap(WinningLineOverlay(line: const [0], color: Colors.green)),
+        _wrap(const WinningLineOverlay(line: [0], color: Colors.green)),
       );
       expect(tester.takeException(), isNull);
     });
@@ -35,7 +35,7 @@ void main() {
     testWidgets('animation progresses to completion after pumpAndSettle',
         (tester) async {
       await tester.pumpWidget(
-        _wrap(WinningLineOverlay(line: const [2, 4, 6], color: Colors.purple)),
+        _wrap(const WinningLineOverlay(line: [2, 4, 6], color: Colors.purple)),
       );
       await tester.pumpAndSettle();
       expect(tester.takeException(), isNull);
@@ -56,11 +56,11 @@ void main() {
                     child: ColoredBox(key: Key('tap-target'), color: Colors.red),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 300,
                   height: 300,
                   child: WinningLineOverlay(
-                    line: const [0, 1, 2],
+                    line: [0, 1, 2],
                     color: Colors.blue,
                   ),
                 ),
@@ -76,7 +76,7 @@ void main() {
 
     testWidgets('is excluded from semantics tree', (tester) async {
       await tester.pumpWidget(
-        _wrap(WinningLineOverlay(line: const [0, 1, 2], color: Colors.blue)),
+        _wrap(const WinningLineOverlay(line: [0, 1, 2], color: Colors.blue)),
       );
       await tester.pumpAndSettle();
 

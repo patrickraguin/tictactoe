@@ -12,7 +12,7 @@ Widget _wrap(Widget child) => MaterialApp(
       home: Scaffold(body: child),
     );
 
-const _humanMark = CellMarkEnum.x;
+const CellMarkEnum _humanMark = CellMarkEnum.x;
 
 final _inProgress = GameStateEntity.inProgress(
   board: BoardEntity.empty(),

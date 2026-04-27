@@ -19,10 +19,10 @@ final _fakePackageInfo = PackageInfo(
 
 Widget _buildApp(ProviderContainer container) => UncontrolledProviderScope(
       container: container,
-      child: MaterialApp(
+      child: const MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        home: const SettingsPage(),
+        home: SettingsPage(),
       ),
     );
 

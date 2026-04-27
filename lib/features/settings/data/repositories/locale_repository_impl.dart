@@ -15,7 +15,7 @@ class LocaleRepositoryImpl implements LocaleRepository {
   Future<Result<AppLocale>> load() async {
     try {
       return Success(AppLocale.fromCode(_prefs.getString(_localeKey)));
-    } catch (e) {
+    } on Object catch (e) {
       return Error(StorageFailure(e.toString()));
     }
   }
@@ -29,8 +29,8 @@ class LocaleRepositoryImpl implements LocaleRepository {
       } else {
         await _prefs.setString(_localeKey, code);
       }
-      return Success(null);
-    } catch (e) {
+      return const Success(null);
+    } on Object catch (e) {
       return Error(StorageFailure(e.toString()));
     }
   }

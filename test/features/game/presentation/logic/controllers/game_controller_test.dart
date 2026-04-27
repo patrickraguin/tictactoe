@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:fake_async/fake_async.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tictactoe/features/game/domain/entities/cell_mark_enum.dart';
@@ -62,7 +64,7 @@ void main() {
       addTearDown(sub.close);
 
       fakeAsync((fake) {
-        container.read(gameControllerProvider(_humanFirstConfig).notifier).playHumanMove(4);
+        unawaited(container.read(gameControllerProvider(_humanFirstConfig).notifier).playHumanMove(4));
 
         expect(sub.read().game.board.cellAt(4), CellMarkEnum.x);
       });
@@ -74,7 +76,7 @@ void main() {
       addTearDown(sub.close);
 
       fakeAsync((fake) {
-        container.read(gameControllerProvider(_humanFirstConfig).notifier).playHumanMove(0);
+        unawaited(container.read(gameControllerProvider(_humanFirstConfig).notifier).playHumanMove(0));
 
         // Synchronous path: human move applied, cpuThinking scheduled before delay
         expect(sub.read().cpuThinking, isTrue);
@@ -87,7 +89,7 @@ void main() {
       addTearDown(sub.close);
 
       fakeAsync((fake) {
-        container.read(gameControllerProvider(_humanFirstConfig).notifier).playHumanMove(0);
+        unawaited(container.read(gameControllerProvider(_humanFirstConfig).notifier).playHumanMove(0));
 
         // Just before delay: CPU has not played yet
         fake.elapse(const Duration(milliseconds: 399));
@@ -109,7 +111,7 @@ void main() {
       addTearDown(sub.close);
 
       // Board is empty, turn = O (CPU); human tries to play
-      container.read(gameControllerProvider(_cpuFirstConfig).notifier).playHumanMove(0);
+      unawaited(container.read(gameControllerProvider(_cpuFirstConfig).notifier).playHumanMove(0));
 
       expect(sub.read().game.board.cellAt(0), CellMarkEnum.empty);
     });
@@ -144,7 +146,7 @@ void main() {
 
       fakeAsync((fake) {
         // Play a move and wait for CPU to respond (400 ms fixed delay)
-        container.read(gameControllerProvider(_humanFirstConfig).notifier).playHumanMove(0);
+        unawaited(container.read(gameControllerProvider(_humanFirstConfig).notifier).playHumanMove(0));
         fake.elapse(const Duration(milliseconds: 400));
         expect(sub.read().game.board.cells.where((c) => c.isPlayed).length, 2);
 

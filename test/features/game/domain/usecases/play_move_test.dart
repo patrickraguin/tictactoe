@@ -34,7 +34,7 @@ void main() {
       expect((result as Error<GameStateEntity>).failure, isA<InvalidMoveFailure>());
     });
 
-    test('returns InvalidMoveFailure when not player\'s turn', () {
+    test("returns InvalidMoveFailure when not player's turn", () {
       final state = initialState(
         board: BoardEntity.empty(),
         firstToPlay: CellMarkEnum.x,
@@ -84,7 +84,7 @@ void main() {
       // X O X
       // X O O
       // O X .  → X plays 8 → draw
-      final board = BoardEntity([
+      final board = BoardEntity(const [
         CellMarkEnum.x, CellMarkEnum.o, CellMarkEnum.x,
         CellMarkEnum.x, CellMarkEnum.o, CellMarkEnum.o,
         CellMarkEnum.o, CellMarkEnum.x, CellMarkEnum.empty,

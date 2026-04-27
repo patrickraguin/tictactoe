@@ -21,7 +21,7 @@ class _FakeStackRouter extends Fake implements StackRouter {
     OnNavigationFailure? onFailure,
   }) {
     pushed.add(route);
-    return Future<T?>.value(null);
+    return Future<T?>.value();
   }
 }
 

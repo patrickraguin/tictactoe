@@ -50,4 +50,3 @@ base class AppProviderObserver extends ProviderObserver {
     );
   }
 }
-

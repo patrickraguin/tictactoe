@@ -9,9 +9,7 @@ import 'package:tictactoe/core/l10n_ext.dart';
 /// Sans dépendance Riverpod : les callbacks sont injectés par [GamePage].
 class GameEndActions extends StatelessWidget {
   const GameEndActions({
-    super.key,
-    required this.onReplay,
-    required this.onChangeConfig,
+    required this.onReplay, required this.onChangeConfig, super.key,
   });
 
   final VoidCallback onReplay;

@@ -15,10 +15,7 @@ import 'package:tictactoe/features/game/presentation/widgets/winning_line_overla
 /// Chaque cellule expose un label sémantique pour les lecteurs d'écran.
 class BoardWidget extends StatelessWidget {
   const BoardWidget({
-    super.key,
-    required this.state,
-    required this.cpuThinking,
-    required this.onCellTap,
+    required this.state, required this.cpuThinking, required this.onCellTap, super.key,
   });
 
   final GameStateEntity state;

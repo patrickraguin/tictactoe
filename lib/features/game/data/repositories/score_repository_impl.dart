@@ -1,7 +1,7 @@
 import 'package:tictactoe/core/result/result.dart';
+import 'package:tictactoe/features/game/data/datasources/score_local_datasource.dart';
 import 'package:tictactoe/features/game/domain/entities/score_entity.dart';
 import 'package:tictactoe/features/game/domain/repositories/score_repository.dart';
-import 'package:tictactoe/features/game/data/datasources/score_local_datasource.dart';
 
 /// Implémentation concrète de [ScoreRepository] utilisant [ScoreLocalDatasource].
 ///
@@ -17,7 +17,7 @@ class ScoreRepositoryImpl implements ScoreRepository {
   Future<Result<ScoreEntity>> load() async {
     try {
       return Success(_local.read());
-    } catch (e) {
+    } on Object catch (e) {
       return Error(StorageFailure(e.toString()));
     }
   }
@@ -26,8 +26,8 @@ class ScoreRepositoryImpl implements ScoreRepository {
   Future<Result<void>> save(ScoreEntity score) async {
     try {
       await _local.write(score);
-      return Success(null);
-    } catch (e) {
+      return const Success(null);
+    } on Object catch (e) {
       return Error(StorageFailure(e.toString()));
     }
   }
@@ -36,8 +36,8 @@ class ScoreRepositoryImpl implements ScoreRepository {
   Future<Result<void>> reset() async {
     try {
       await _local.clear();
-      return Success(null);
-    } catch (e) {
+      return const Success(null);
+    } on Object catch (e) {
       return Error(StorageFailure(e.toString()));
     }
   }

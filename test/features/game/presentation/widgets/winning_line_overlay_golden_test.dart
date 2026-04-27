@@ -22,7 +22,7 @@ void main() {
   group('WinningLineOverlay — golden tests', () {
     testWidgets('diagonal top-left to bottom-right', (tester) async {
       await tester.pumpWidget(
-        _wrap(WinningLineOverlay(line: const [0, 4, 8], color: const Color(0xFF2F6FEB))),
+        _wrap(const WinningLineOverlay(line: [0, 4, 8], color: Color(0xFF2F6FEB))),
       );
       await tester.pumpAndSettle();
       await expectLater(
@@ -33,7 +33,7 @@ void main() {
 
     testWidgets('diagonal top-right to bottom-left', (tester) async {
       await tester.pumpWidget(
-        _wrap(WinningLineOverlay(line: const [2, 4, 6], color: const Color(0xFF2F6FEB))),
+        _wrap(const WinningLineOverlay(line: [2, 4, 6], color: Color(0xFF2F6FEB))),
       );
       await tester.pumpAndSettle();
       await expectLater(
@@ -44,7 +44,7 @@ void main() {
 
     testWidgets('horizontal top row', (tester) async {
       await tester.pumpWidget(
-        _wrap(WinningLineOverlay(line: const [0, 1, 2], color: const Color(0xFF2F6FEB))),
+        _wrap(const WinningLineOverlay(line: [0, 1, 2], color: Color(0xFF2F6FEB))),
       );
       await tester.pumpAndSettle();
       await expectLater(
@@ -55,7 +55,7 @@ void main() {
 
     testWidgets('vertical left column', (tester) async {
       await tester.pumpWidget(
-        _wrap(WinningLineOverlay(line: const [0, 3, 6], color: const Color(0xFF2F6FEB))),
+        _wrap(const WinningLineOverlay(line: [0, 3, 6], color: Color(0xFF2F6FEB))),
       );
       await tester.pumpAndSettle();
       await expectLater(

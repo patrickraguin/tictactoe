@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'package:tictactoe/core/logging/app_logger.dart';
@@ -47,7 +49,7 @@ class GameController extends _$GameController {
     );
     if (firstMark != config.humanMark) {
       _log.info('CPU goes first, scheduling opening move', tag: _tag);
-      Future<void>.microtask(_playCpuIfNeeded);
+      unawaited(Future<void>.microtask(_playCpuIfNeeded));
     }
     return GameUiState(game: game);
   }

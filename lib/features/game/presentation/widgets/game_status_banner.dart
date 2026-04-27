@@ -8,7 +8,7 @@ import 'package:tictactoe/features/game/domain/entities/game_state_entity.dart';
 /// Utilise [AnimatedSwitcher] pour une transition fluide entre les messages.
 /// L'icône, la couleur et le fond s'adaptent automatiquement à l'état du jeu.
 class GameStatusBanner extends StatelessWidget {
-  const GameStatusBanner({super.key, required this.state, required this.cpuThinking});
+  const GameStatusBanner({required this.state, required this.cpuThinking, super.key});
 
   final GameStateEntity state;
   final bool cpuThinking;

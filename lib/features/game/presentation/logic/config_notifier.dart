@@ -13,7 +13,7 @@ import 'package:tictactoe/features/game/domain/entities/type_player_enum.dart';
 ///
 /// Note : écrit manuellement (sans codegen) car le générateur Riverpod 3 ne
 /// peut pas encore résoudre les types Freezed 3 abstraits comme état de Notifier.
-final configNotifierProvider =
+final NotifierProvider<ConfigNotifier, GameConfigEntity> configNotifierProvider =
     NotifierProvider.autoDispose<ConfigNotifier, GameConfigEntity>(
   ConfigNotifier.new,
 );

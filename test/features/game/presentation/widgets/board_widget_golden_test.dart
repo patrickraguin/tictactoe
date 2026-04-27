@@ -60,7 +60,7 @@ final _wonState = GameStateEntity.won(
 );
 
 final _drawState = GameStateEntity.draw(
-  board: BoardEntity([
+  board: BoardEntity(const [
     CellMarkEnum.x, CellMarkEnum.o, CellMarkEnum.x, //
     CellMarkEnum.x, CellMarkEnum.o, CellMarkEnum.o, //
     CellMarkEnum.o, CellMarkEnum.x, CellMarkEnum.x, //

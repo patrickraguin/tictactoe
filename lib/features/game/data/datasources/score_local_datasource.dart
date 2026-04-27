@@ -26,7 +26,7 @@ class ScoreLocalDatasource {
         losses: map['losses'] as int? ?? 0,
         draws: map['draws'] as int? ?? 0,
       );
-    } catch (_) {
+    } on Object {
       return ScoreEntity.zero();
     }
   }

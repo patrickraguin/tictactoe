@@ -32,27 +32,27 @@ void main() {
 
     test('retourne le symbole CPU quand firstPlayer est cpu', () {
       final result = const ResolveFirstPlayer()(
-        makeConfig(firstPlayer: TypePlayerEnum.cpu, humanMark: CellMarkEnum.x),
+        makeConfig(firstPlayer: TypePlayerEnum.cpu),
       );
       expect(result.unwrap(), CellMarkEnum.o); // opponent de X
     });
 
     test('retourne le symbole humain quand random donne true', () {
       final rng = _MockRandom();
-      when(() => rng.nextBool()).thenReturn(true);
+      when(rng.nextBool).thenReturn(true);
 
       final result = ResolveFirstPlayer(random: rng)(
-        makeConfig(firstPlayer: TypePlayerEnum.random, humanMark: CellMarkEnum.x),
+        makeConfig(firstPlayer: TypePlayerEnum.random),
       );
       expect(result.unwrap(), CellMarkEnum.x);
     });
 
     test('retourne le symbole CPU quand random donne false', () {
       final rng = _MockRandom();
-      when(() => rng.nextBool()).thenReturn(false);
+      when(rng.nextBool).thenReturn(false);
 
       final result = ResolveFirstPlayer(random: rng)(
-        makeConfig(firstPlayer: TypePlayerEnum.random, humanMark: CellMarkEnum.x),
+        makeConfig(firstPlayer: TypePlayerEnum.random),
       );
       expect(result.unwrap(), CellMarkEnum.o); // opponent de X
     });

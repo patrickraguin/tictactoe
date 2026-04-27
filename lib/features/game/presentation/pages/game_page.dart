@@ -1,11 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:tictactoe/core/l10n_ext.dart';
+import 'package:tictactoe/features/game/domain/entities/game_config_entity.dart';
 import 'package:tictactoe/features/game/presentation/logic/controllers/game_controller.dart';
 import 'package:tictactoe/features/game/presentation/logic/recorders/game_outcome_recorder.dart';
-import 'package:tictactoe/features/game/domain/entities/game_config_entity.dart';
 import 'package:tictactoe/features/game/presentation/widgets/board_widget.dart';
 import 'package:tictactoe/features/game/presentation/widgets/game_end_actions.dart';
 import 'package:tictactoe/features/game/presentation/widgets/game_status_banner.dart';
@@ -15,7 +14,7 @@ import 'package:tictactoe/features/game/presentation/widgets/score_panel.dart';
 /// et le panneau de score. Écoute [GameController] et [GameOutcomeRecorder].
 @RoutePage()
 class GamePage extends ConsumerWidget {
-  const GamePage({super.key, required this.config});
+  const GamePage({required this.config, super.key});
 
   final GameConfigEntity config;
 

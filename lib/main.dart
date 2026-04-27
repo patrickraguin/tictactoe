@@ -5,7 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:tictactoe/core/app.dart';
 import 'package:tictactoe/core/error/app_provider_observer.dart';
-import 'package:tictactoe/core/logging/app_logger.dart';
 import 'package:tictactoe/core/logging/console_logger.dart';
 import 'package:tictactoe/core/logging/logger_provider.dart';
 import 'package:tictactoe/core/persistence/shared_prefs_provider.dart';
@@ -14,7 +13,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   const logger = ConsoleLogger(
-    minLevel: kDebugMode ? LogLevel.debug : LogLevel.info,
+    
   );
 
   // Capture Flutter framework errors (widget tree, rendering, etc.)
@@ -35,7 +34,7 @@ Future<void> main() async {
 
   runApp(
     ProviderScope(
-      observers: [AppProviderObserver(logger)],
+      observers: const [AppProviderObserver(logger)],
       overrides: [
         sharedPreferencesInstanceProvider.overrideWithValue(prefs),
         loggerProvider.overrideWithValue(logger),
@@ -44,4 +43,3 @@ Future<void> main() async {
     ),
   );
 }
-
