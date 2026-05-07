@@ -1,0 +1,14 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart';
+
+import 'package:game_domain/ai/ai_strategy.dart';
+import 'package:game_domain/entities/difficulty_enum.dart';
+
+/// Fournit l'[AiStrategy] correspondant au niveau de difficulté.
+///
+/// Provider non code-gen intentionnel : simple délégation sans état,
+/// `overrideWith` disponible pour l'injection de fakes en test.
+final ProviderFamily<AiStrategy, DifficultyEnum> aiStrategyProvider =
+    Provider.autoDispose.family<AiStrategy, DifficultyEnum>(
+  (ref, difficulty) => AiStrategy.fromDifficulty(difficulty),
+);

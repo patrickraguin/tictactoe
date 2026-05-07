@@ -1,0 +1,151 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:core/l10n_ext.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:game_domain/entities/cell_mark_enum.dart';
+import 'package:game_domain/entities/difficulty_enum.dart';
+import 'package:game_domain/entities/type_player_enum.dart';
+import 'package:game_presentation/game_route.dart';
+import 'package:game_presentation/logic/config_notifier.dart';
+
+/// Page de configuration d'une partie : choix du symbole, du premier joueur
+/// et du niveau de difficulté avant de lancer la partie.
+///
+/// L'état éphémère des sélections est géré par [ConfigNotifier] (auto-dispose) :
+/// chaque ouverture repart des valeurs par défaut (X / Humain / Difficile).
+@RoutePage()
+class ConfigPage extends ConsumerWidget {
+  const ConfigPage({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final config = ref.watch(configNotifierProvider);
+    final notifier = ref.read(configNotifierProvider.notifier);
+    final l10n = context.l10n;
+
+    return Scaffold(
+      appBar: AppBar(title: Text(l10n.configPageTitle)),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _SectionCard(
+                icon: Icons.tag,
+                label: l10n.configYourSymbol,
+                child: SegmentedButton<CellMarkEnum>(
+                  segments: const [
+                    ButtonSegment(value: CellMarkEnum.x, label: Text('X')),
+                    ButtonSegment(value: CellMarkEnum.o, label: Text('O')),
+                  ],
+                  selected: {config.humanMark},
+                  onSelectionChanged: (s) => notifier.setMark(s.first),
+                ),
+              ),
+              const SizedBox(height: 12),
+              _SectionCard(
+                icon: Icons.person_outline,
+                label: l10n.configWhoStarts,
+                child: SegmentedButton<TypePlayerEnum>(
+                  segments: [
+                    ButtonSegment(
+                      value: TypePlayerEnum.human,
+                      label: Text(l10n.configFirstPlayerHuman),
+                    ),
+                    ButtonSegment(
+                      value: TypePlayerEnum.cpu,
+                      label: Text(l10n.configFirstPlayerCpu),
+                    ),
+                    ButtonSegment(
+                      value: TypePlayerEnum.random,
+                      label: Text(l10n.configFirstPlayerRandom),
+                    ),
+                  ],
+                  selected: {config.firstPlayer},
+                  onSelectionChanged: (s) => notifier.setFirstPlayer(s.first),
+                ),
+              ),
+              const SizedBox(height: 12),
+              _SectionCard(
+                icon: Icons.speed,
+                label: l10n.configDifficulty,
+                child: SegmentedButton<DifficultyEnum>(
+                  segments: [
+                    ButtonSegment(
+                      value: DifficultyEnum.easy,
+                      label: Text(l10n.configDifficultyEasy),
+                    ),
+                    ButtonSegment(
+                      value: DifficultyEnum.medium,
+                      label: Text(l10n.configDifficultyMedium),
+                    ),
+                    ButtonSegment(
+                      value: DifficultyEnum.hard,
+                      label: Text(l10n.configDifficultyHard),
+                    ),
+                  ],
+                  selected: {config.difficulty},
+                  onSelectionChanged: (s) => notifier.setDifficulty(s.first),
+                ),
+              ),
+              const Spacer(),
+              FilledButton.icon(
+                icon: const Icon(Icons.play_arrow),
+                label: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  child: Text(
+                    l10n.configStartButton,
+                    style: const TextStyle(fontSize: 18),
+                  ),
+                ),
+                onPressed: () => context.router.push(GameRoute(config: config)),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _SectionCard extends StatelessWidget {
+  const _SectionCard({
+    required this.icon,
+    required this.label,
+    required this.child,
+  });
+
+  final IconData icon;
+  final String label;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: [
+                Icon(icon, size: 18, color: cs.primary),
+                const SizedBox(width: 8),
+                Text(
+                  label,
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        color: cs.primary,
+                      ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            child,
+          ],
+        ),
+      ),
+    );
+  }
+}

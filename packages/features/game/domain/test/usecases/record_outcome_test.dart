@@ -1,0 +1,61 @@
+import 'package:core/result/result.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:game_domain/entities/score_entity.dart';
+import 'package:game_domain/usecases/record_outcome.dart';
+
+const _recordOutcome = RecordOutcome();
+
+ScoreEntity _call(ScoreEntity current, GameOutcome outcome) =>
+    _recordOutcome(RecordOutcomeParams(current: current, outcome: outcome)).unwrap();
+
+void main() {
+  const zero = ScoreEntity();
+  const base = ScoreEntity(wins: 1, losses: 2, draws: 3);
+
+  group('RecordOutcome', () {
+    test('win increments wins only', () {
+      expect(
+        _call(zero, GameOutcome.win),
+        const ScoreEntity(wins: 1),
+      );
+    });
+
+    test('loss increments losses only', () {
+      expect(
+        _call(zero, GameOutcome.loss),
+        const ScoreEntity(losses: 1),
+      );
+    });
+
+    test('draw increments draws only', () {
+      expect(
+        _call(zero, GameOutcome.draw),
+        const ScoreEntity(draws: 1),
+      );
+    });
+
+    test('does not mutate other fields', () {
+      final result = _call(base, GameOutcome.win);
+      expect(result.wins, 2);
+      expect(result.losses, base.losses);
+      expect(result.draws, base.draws);
+    });
+
+    test('accumulates correctly over multiple calls', () {
+      var score = zero;
+      score = _call(score, GameOutcome.win);
+      score = _call(score, GameOutcome.win);
+      score = _call(score, GameOutcome.loss);
+      score = _call(score, GameOutcome.draw);
+
+      expect(score, const ScoreEntity(wins: 2, losses: 1, draws: 1));
+    });
+
+    test('always returns Success', () {
+      expect(
+        _recordOutcome(const RecordOutcomeParams(current: zero, outcome: GameOutcome.win)),
+        isA<Success<ScoreEntity>>(),
+      );
+    });
+  });
+}

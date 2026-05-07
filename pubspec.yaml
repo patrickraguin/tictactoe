@@ -6,35 +6,47 @@ version: 1.0.0+1
 environment:
   sdk: ^3.11.5
 
+workspace:
+  - packages/core
+  - packages/features/game/domain
+  - packages/features/game/data
+  - packages/features/game/presentation
+  - packages/features/settings/domain
+  - packages/features/settings/data
+  - packages/features/settings/presentation
+
 dependencies:
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  intl: ^0.20.2
-
-  # State management
   flutter_riverpod: ^3.1.0
   riverpod_annotation: ^4.0.0
-
-  # Immutable models
-  freezed_annotation: ^3.0.3
-
-  # Routing
   auto_route: ^11.1.0
-
-  # Local persistence
   shared_preferences: ^2.3.2
-  package_info_plus: ^10.1.0
 
-  # Pure Dart utilities (domain layer)
-  meta: ^1.16.0
+  # Local packages
+  core:
+    path: packages/core
+  game_domain:
+    path: packages/features/game/domain
+  game_data:
+    path: packages/features/game/data
+  game_presentation:
+    path: packages/features/game/presentation
+  settings_domain:
+    path: packages/features/settings/domain
+  settings_data:
+    path: packages/features/settings/data
+  settings_presentation:
+    path: packages/features/settings/presentation
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   very_good_analysis: ^10.2.0
-  riverpod: any  # transitive via flutter_riverpod, needed for Override type in test helpers
+  riverpod: any
+  melos: ^7.0.0
 
   # Codegen
   build_runner: ^2.14.0
@@ -47,6 +59,25 @@ dev_dependencies:
   riverpod_lint: ^3.1.0
   fake_async: ^1.3.3
   mocktail: ^1.0.5
+
+melos:
+  command:
+    bootstrap:
+      usePubWorkspace: true
+  scripts:
+    codegen:
+      description: Run build_runner in dependency order
+      run: |
+        melos exec --scope="core" -- flutter pub run build_runner build --delete-conflicting-outputs
+        melos exec --scope="game_domain" -- flutter pub run build_runner build --delete-conflicting-outputs
+        melos exec --scope="game_presentation" -- flutter pub run build_runner build --delete-conflicting-outputs
+        melos exec --scope="settings_presentation" -- flutter pub run build_runner build --delete-conflicting-outputs
+    test:all:
+      description: Run all tests across all packages
+      run: melos exec --dir-exists=test -- flutter test --exclude-tags golden
+    analyze:
+      description: Analyze all packages
+      run: melos exec -- flutter analyze
 
 flutter:
   uses-material-design: true

@@ -1,19 +1,23 @@
+import 'package:core/error/app_provider_observer.dart';
+import 'package:core/logging/console_logger.dart';
+import 'package:core/logging/logger_provider.dart';
+import 'package:core/persistence/shared_prefs_provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:game_data/datasources/score_local_datasource.dart';
+import 'package:game_data/repositories/score_repository_impl.dart';
+import 'package:game_presentation/logic/providers/score_providers.dart';
+import 'package:settings_data/repositories/locale_repository_impl.dart';
+import 'package:settings_presentation/logic/locale_repository_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'package:tictactoe/core/app.dart';
-import 'package:tictactoe/core/error/app_provider_observer.dart';
-import 'package:tictactoe/core/logging/console_logger.dart';
-import 'package:tictactoe/core/logging/logger_provider.dart';
-import 'package:tictactoe/core/persistence/shared_prefs_provider.dart';
+import 'package:tictactoe/app/app.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   const logger = ConsoleLogger(
-    
+
   );
 
   // Capture Flutter framework errors (widget tree, rendering, etc.)
@@ -38,6 +42,16 @@ Future<void> main() async {
       overrides: [
         sharedPreferencesInstanceProvider.overrideWithValue(prefs),
         loggerProvider.overrideWithValue(logger),
+        scoreRepositoryProvider.overrideWith(
+          (ref) => ScoreRepositoryImpl(
+            ScoreLocalDatasource(ref.watch(sharedPreferencesInstanceProvider)),
+          ),
+        ),
+        localeRepositoryProvider.overrideWith(
+          (ref) => LocaleRepositoryImpl(
+            ref.watch(sharedPreferencesInstanceProvider),
+          ),
+        ),
       ],
       child: const TicTacToeApp(),
     ),
