@@ -53,10 +53,6 @@ void main() {
       final container = makeContainer();
       final sub = container.listen(configNotifierProvider, (_, _) {});
       addTearDown(sub.close);
-      final notifier = container.read(configNotifierProvider.notifier);
-
-      notifier.setMark(CellMarkEnum.o);
-      notifier.setDifficulty(DifficultyEnum.medium);
 
       final config = sub.read();
       expect(config.humanMark, CellMarkEnum.o);

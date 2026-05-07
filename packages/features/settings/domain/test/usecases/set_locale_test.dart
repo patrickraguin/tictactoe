@@ -5,10 +5,10 @@ import 'package:settings_domain/repositories/locale_repository.dart';
 import 'package:settings_domain/usecases/set_locale.dart';
 
 class _FakeLocaleRepository implements LocaleRepository {
-  AppLocale? saved;
-  final bool shouldFail;
 
   _FakeLocaleRepository({this.shouldFail = false});
+  AppLocale? saved;
+  final bool shouldFail;
 
   @override
   Future<Result<AppLocale>> load() async => const Success(AppLocale.system);
