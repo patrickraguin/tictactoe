@@ -54,10 +54,12 @@ void main() {
       final sub = container.listen(configNotifierProvider, (_, _) {});
       addTearDown(sub.close);
 
+      container.read(configNotifierProvider.notifier).setMark(CellMarkEnum.o);
+
       final config = sub.read();
       expect(config.humanMark, CellMarkEnum.o);
       expect(config.firstPlayer, TypePlayerEnum.human);
-      expect(config.difficulty, DifficultyEnum.medium);
+      expect(config.difficulty, DifficultyEnum.hard);
     });
   });
 }
