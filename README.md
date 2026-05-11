@@ -56,52 +56,153 @@ Ce qui est couvert :
 
 ## Architecture
 
+### Vue d'ensemble — Clean Architecture feature-first
+
+Le projet est un **monorepo Dart** (pub workspaces) composé de 7 packages indépendants organisés en couches strictes. Chaque feature est découpée en trois packages : `domain`, `data`, `presentation`.
+
 ```
-lib/
-├── main.dart                    # ProviderScope + AppProviderObserver
-│
-├── core/                        # Infrastructure transversale
-│   ├── app.dart                 # MaterialApp.router (thème, locale, router)
-│   ├── router/                  # AutoRoute — 4 routes type-safe
-│   ├── theme/                   # Material 3, light + dark
-│   ├── logging/                 # Interface AppLogger + ConsoleLogger + provider
-│   ├── persistence/             # SharedPreferences + PackageInfo via providers
-│   ├── l10n/                    # Traductions ARB (FR/EN) + classes générées
-│   ├── error/                   # AppProviderObserver : log toutes les transitions Riverpod
-│   └── result/                  # Result<T> sealed (Success / Error / Failure)
-│
+┌─────────────────────────────────────────────────────────────────────┐
+│                          lib/main.dart                              │
+│              ProviderScope · overrides · error handlers             │
+└────────────────────────────┬────────────────────────────────────────┘
+                             │
+┌────────────────────────────▼────────────────────────────────────────┐
+│                         lib/app/app.dart                            │
+│          MaterialApp.router · Theme · Localizations · AppRouter     │
+└──────────────────┬──────────────────────────────┬───────────────────┘
+                   │                              │
+   ┌───────────────▼──────────────┐  ┌────────────▼────────────────┐
+   │      game_presentation       │  │    settings_presentation    │
+   │  ┌─────────────────────────┐ │  │  ┌────────────────────────┐ │
+   │  │ Pages                   │ │  │  │ SettingsPage           │ │
+   │  │  HomePage               │ │  │  └────────────────────────┘ │
+   │  │  ConfigPage             │ │  │  ┌────────────────────────┐ │
+   │  │  GamePage               │ │  │  │ LocaleController       │ │
+   │  └─────────────────────────┘ │  │  │ (AsyncNotifier,        │ │
+   │  ┌─────────────────────────┐ │  │  │  keepAlive)            │ │
+   │  │ Logic (Riverpod)        │ │  │  └────────────────────────┘ │
+   │  │  GameController         │ │  └─────────────────────────────┘
+   │  │  ScoreController        │ │
+   │  │  ConfigNotifier         │ │
+   │  │  GameOutcomeRecorder    │ │
+   │  │  aiStrategyProvider     │ │
+   │  └─────────────────────────┘ │
+   │  ┌─────────────────────────┐ │
+   │  │ Widgets                 │ │
+   │  │  BoardWidget            │ │
+   │  │  WinningLineOverlay     │ │
+   │  │  GameStatusBanner       │ │
+   │  │  ScorePanel             │ │
+   │  └─────────────────────────┘ │
+   └───────────────┬──────────────┘
+                   │ dépend de ↓
+   ┌───────────────▼──────────────┐  ┌─────────────────────────────┐
+   │         game_domain          │  │       settings_domain       │
+   │  Dart pur · 0 dép. Flutter   │  │  AppLocale · LocaleRepo     │
+   │                              │  │  LoadLocale · SetLocale     │
+   │  GameStateEntity (sealed)    │  └──────────────┬──────────────┘
+   │    InProgress │ Won │ Draw   │                 │
+   │  BoardEntity · CellMark      │  ┌──────────────▼──────────────┐
+   │  GameConfigEntity            │  │       settings_data         │
+   │  AiStrategy (interface)      │  │  LocaleRepositoryImpl       │
+   │    RandomStrategy            │  │  SharedPreferences          │
+   │    HeuristicStrategy         │  └─────────────────────────────┘
+   │    MinimaxStrategy (α-β)     │
+   │  UseCase interfaces          │
+   │  ScoreRepository (interface) │
+   └───────────────┬──────────────┘
+                   │ implémenté par ↓
+   ┌───────────────▼──────────────┐
+   │          game_data           │
+   │  ScoreRepositoryImpl         │
+   │  ScoreLocalDatasource        │
+   │  SharedPreferences           │
+   └───────────────┬──────────────┘
+                   │
+   ┌───────────────▼──────────────────────────────────────────────┐
+   │                            core                              │
+   │  Result<T> sealed (Success / Error) · Failure hierarchy      │
+   │  UseCase / AsyncUseCase interfaces                           │
+   │  AppRouter + RouteContributor (agrège les routes features)   │
+   │  AppLogger + ConsoleLogger + loggerProvider                  │
+   │  AppProviderObserver (log transitions Riverpod)              │
+   │  SharedPreferences provider · PackageInfo provider           │
+   │  Material 3 Theme (light + dark)                             │
+   │  Localisations générées ARB (FR / EN)                        │
+   └──────────────────────────────────────────────────────────────┘
+```
+
+### Structure des packages (monorepo pub workspace)
+
+```
+packages/
+├── core/                           # Partagé par toutes les features
 └── features/
     ├── game/
-    │   ├── domain/              # Dart pur — aucune dépendance Flutter ou Riverpod
-    │   │   ├── entities/        # Board, CellMark, GameState (sealed), GameConfig, Score
-    │   │   ├── ai/              # AiStrategy + 3 implémentations + factory
-    │   │   ├── usecases/        # playMove, recordOutcome, resolveFirstPlayer (fonctions pures)
-    │   │   └── repositories/    # ScoreRepository (abstrait)
-    │   ├── data/
-    │   │   ├── datasources/     # SharedPreferences wrapper
-    │   │   └── repositories/    # ScoreRepositoryImpl
-    │   └── presentation/
-    │       ├── logic/
-    │       │   ├── controllers/ # GameController, ScoreController
-    │       │   ├── providers/   # aiStrategyProvider (family), scoreRepositoryProvider
-    │       │   ├── recorders/   # GameOutcomeRecorder
-    │       │   ├── game_ui_state.dart     # GameStateEntity + cpuThinking
-    │       │   └── config_notifier.dart   # État éphémère de ConfigPage
-    │       ├── pages/           # HomePage, ConfigPage, GamePage, SettingsPage
-    │       └── widgets/         # BoardWidget, CellWidget, WinningLineOverlay, ScorePanel…
-    │
+    │   ├── game_domain/            # Dart pur — entities, AI, use cases, repo interfaces
+    │   ├── game_data/              # Implémentations (SharedPreferences)
+    │   └── game_presentation/      # Flutter + Riverpod — pages, widgets, logic
     └── settings/
-        ├── domain/              # AppLocale (enum), LocaleRepository (abstrait)
-        ├── data/                # LocaleRepositoryImpl
-        └── presentation/        # LocaleController, SettingsPage
+        ├── settings_domain/        # AppLocale, LocaleRepository interface
+        ├── settings_data/          # LocaleRepositoryImpl
+        └── settings_presentation/  # LocaleController, SettingsPage
 ```
 
-**Règles d'architecture :**
+### Flux d'une action utilisateur (jouer un coup)
 
-- Le domain ne connaît rien de Flutter, Riverpod ni SharedPreferences. Il est testé avec des assertions pures.
-- L'inversion de dépendance est portée par `ScoreRepository` : abstrait dans `domain`, implémenté dans `data`, injecté depuis `presentation` via Riverpod.
-- `GameState` est une **sealed union** (`InProgress | Won | Draw`). Le pattern-matching est exhaustif — le compilateur attrape les cas manquants.
-- `GameOutcomeRecorder` est séparé de `GameController` : il écoute les transitions `InProgress → Won/Draw` et délègue au `ScoreController`. `GameController` ne connaît pas `ScoreController` (SRP).
+```
+Tap sur une cellule (BoardWidget)
+         │
+         ▼
+GameController.playHumanMove(index)
+  ├─ PlayMove use case ──► BoardEntity.place() → Result<GameStateEntity>
+  ├─ Mise à jour de GameUiState (état Riverpod)
+  └─ Si la partie continue → playComputerMove() après délai
+              │
+              ▼
+       AiStrategy.chooseMove(board)
+              │
+       MinimaxStrategy (alpha-beta pruning)   ← Hard
+       HeuristicStrategy (règles prioritaires) ← Medium
+       RandomStrategy (case libre au hasard)   ← Easy
+              │
+              ▼
+       PlayMove use case ──► nouvel état
+              │
+              ▼
+  GameOutcomeRecorder (écoute Won/Draw)
+         │
+         ▼
+  RecordOutcome use case ──► ScoreRepository.save()
+         │
+         ▼
+  ScoreController (recharge le score depuis le repo)
+```
+
+### Injection de dépendances
+
+Les dépendances traversent les couches via **Riverpod + surcharge dans `main.dart`** :
+
+```dart
+// main.dart — les implémentations concrètes écrasent les placeholders domain
+ProviderScope(
+  overrides: [
+    scoreRepositoryProvider.overrideWithValue(ScoreRepositoryImpl(...)),
+    localeRepositoryProvider.overrideWithValue(LocaleRepositoryImpl(...)),
+  ],
+  child: TicTacToeApp(),
+)
+```
+
+Dans les tests, les repositories sont remplacés par des mocks ou fakes sans toucher au code de production.
+
+### Règles d'architecture
+
+- **Le domain ne connaît rien de Flutter, Riverpod ni SharedPreferences.** Il est testé avec des assertions pures.
+- **L'inversion de dépendance** est portée par les interfaces de repository : abstraites dans `domain`, implémentées dans `data`, injectées depuis `presentation` via Riverpod.
+- **`GameState` est une sealed union** (`InProgress | Won | Draw`). Le pattern-matching est exhaustif — le compilateur attrape les cas manquants.
+- **`GameOutcomeRecorder` est séparé de `GameController`** : il écoute les transitions `InProgress → Won/Draw` et délègue au `ScoreController`. `GameController` ne connaît pas `ScoreController` (SRP).
+- **Les routes sont décentralisées** : chaque package `presentation` expose un `RouteContributor`. L'`AppRouter` du core les agrège sans couplage direct.
 
 ## IA — 3 niveaux de difficulté
 
